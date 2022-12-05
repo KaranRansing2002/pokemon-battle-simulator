@@ -1,79 +1,61 @@
 import React from "react";
+import rows from './Data'
 
-function Stats() {
+const stats = [
+    {
+        name: "HP",
+        value: 0,
+    },
+    {
+        name: "Atk",
+        value: 0
+    },
+    {
+        name: "Def",
+        value: 0
+    },
+    {
+        name: "Spa",
+        value: 0
+    },
+    {
+        name: "Spd",
+        value: 0
+    },
+    {
+        name: "Spe",
+        value: 0
+    },
+]
+
+function Stats(props) {
+    const pokemon = props.selectedPokemon;
+    let ind = 0;
+    for (let i = 0; i < rows.length; i++){
+        if (rows[i][1] == pokemon) {
+            ind = i;
+            break;
+        }
+    }
+    for (let i = 0; i < stats.length; i++){
+        stats[i].value = rows[ind][i + 4];
+        stats[i].value = stats[i].value / 200 * 100;
+    }
   return (
-    <div>
-      <div className="setcol setcol-stats">
-        <div className="setrow">
-          <label>Stats</label>
-          <button className="textbox setstats" name="stats">
-            <span className="statrow statrow-head">
-              <label></label> <span className="statgraph"></span> <em>EV</em>
-            </span>
-            <span className="statrow">
-              <label>HP</label>{" "}
-              <span className="statgraph">
-                <span
-                  style="width: 39.3111px; background: rgb(86, 125, 54);"
-                  ne="0.9427858716895479"
-                ></span>
-              </span>{" "}
-              <em></em>
-            </span>
-            <span className="statrow">
-              <label>Atk</label>{" "}
-              <span className="statgraph">
-                <span
-                  style="width: 26.0417px; background: rgb(125, 106, 54);"
-                  ne="0.760455432267136"
-                ></span>
-              </span>{" "}
-              <em></em>
-            </span>
-            <span className="statrow">
-              <label>Def</label>{" "}
-              <span className="statgraph">
-                <span
-                  style="width: 26.1905px; background: rgb(125, 106, 54);"
-                  ne="0.1599713350116243"
-                ></span>
-              </span>{" "}
-              <em></em>
-            </span>
-            <span className="statrow">
-              <label>SpA</label>{" "}
-              <span className="statgraph">
-                <span
-                  style="width: 30.6548px; background: rgb(125, 114, 54);"
-                  ne="0.435751372277992"
-                ></span>
-              </span>{" "}
-              <em></em>
-            </span>
-            <span className="statrow">
-              <label>SpD</label>{" "}
-              <span className="statgraph">
-                <span
-                  style="width: 29.1667px; background: rgb(125, 111, 54);"
-                  ne="0.5836321667250404"
-                ></span>
-              </span>{" "}
-              <em></em>
-            </span>
-            <span className="statrow">
-              <label>Spe</label>{" "}
-              <span className="statgraph">
-                <span
-                  style="width: 14.2857px; background: rgb(125, 82, 54);"
-                  ne="0.5328675930004894"
-                ></span>
-              </span>{" "}
-              <em></em>
-            </span>
-          </button>
-        </div>
+      <div className="h-1/4 w-1/4 bg-[#202225] flex items-center">
+          <div className='w-full'>
+            {
+                  stats.map((stat) => {
+                      return (
+                        <div className="h-full w-full flex">
+                              <h2 className="text-white text-sm">{ stat.name }</h2>  
+                              <div className={`h-2 m-2 w-[${stat.value}%] bg-green-600 rounded`} ></div>
+                        </div>
+                      )
+                  })
+            } 
+          </div>  
       </div>
-    </div>
   );
 }
 

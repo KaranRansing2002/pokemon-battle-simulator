@@ -1,4 +1,4 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Paper from '@mui/material/Paper';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
-import charmander from './images/charmander.png'
+import rows from './Data.js'
 
 const columns = [
     { 
@@ -76,11 +76,8 @@ const columns = [
     }
 ];
 
-const rows = [
-    [charmander,"Charmander","Fire","Blaze | Solarpower","39","52","43","60","50","65","309"]
-]
-
-function Pokedex() {
+function Pokedex(props) {
+    console.log(props)
   return (
     <div className='h-1/2'>
         <Paper sx={{ width: '70%', overflow: 'hidden' }}>
@@ -103,7 +100,7 @@ function Pokedex() {
                 {
                     rows.map((row,index)=>{
                         return(
-                            <TableRow hover role="checkbox" tabIndex={-1} key={index}>
+                            <TableRow hover role="checkbox" tabIndex={-1} key={index} onClick={()=>props.sPokemon(row[1])}>
                                 {
                                     columns.map((ele,index)=>{
                                         return (
@@ -120,7 +117,6 @@ function Pokedex() {
             </TableBody>
             </Table>
         </TableContainer>
-        
         </Paper>
     </div>
   )
