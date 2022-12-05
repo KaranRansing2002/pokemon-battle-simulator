@@ -1,5 +1,6 @@
 import React from 'react'
 import Button from '@mui/material/Button';
+import Pokedex from './Pokedex';
 
 function Teambuilder() {
   return (
@@ -8,7 +9,7 @@ function Teambuilder() {
           <Button variant="contained" color="primary">
             Add Team  
           </Button>
-          
+          <Pokedex/>
         </div>
     </div>
   )
