@@ -108,7 +108,7 @@ function Pokedex() {
                                     columns.map((ele,index)=>{
                                         return (
                                             <TableCell key={index} align={ele.align}>
-                                                {ele.id==0 ? <img className='h-14 cover' src={row[0]}></img> : row[ele.id]}
+                                                {ele.id==0 ? <img className='h-8 scale-[2.5]' src={row[0]}></img> : row[ele.id]}
                                             </TableCell>
                                         )
                                     })
