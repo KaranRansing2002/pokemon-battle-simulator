@@ -1,5 +1,5 @@
 import React from "react";
-import rows from './Data'
+import {rows} from './Data'
 
 const stats = [
     {
