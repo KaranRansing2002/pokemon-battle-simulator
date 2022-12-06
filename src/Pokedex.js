@@ -80,7 +80,7 @@ function Pokedex(props) {
     console.log(props)
   return (
     <div className='h-1/2'>
-        <Paper sx={{ width: '70%', overflow: 'hidden' }}>
+        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer sx={{ maxHeight: 440 }}>
             <Table stickyHeader aria-label="sticky table">
             <TableHead>
@@ -100,7 +100,7 @@ function Pokedex(props) {
                 {
                     rows.map((row,index)=>{
                         return(
-                            <TableRow hover role="checkbox" tabIndex={-1} key={index} onClick={()=>props.sPokemon(row[1])}>
+                            <TableRow hover role="checkbox" tabIndex={-1} key={index} onClick={()=>props.sPokemon((oldarr)=>[...oldarr,row[1]])}>
                                 {
                                     columns.map((ele,index)=>{
                                         return (
