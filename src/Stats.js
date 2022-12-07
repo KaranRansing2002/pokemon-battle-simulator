@@ -37,6 +37,7 @@ function Stats(props) {
             break;
         }
     }
+    // console.log(rows[ind])
     for (let i = 0; i < stats.length; i++){
         stats[i].value = rows[ind][i + 4];
         stats[i].value = stats[i].value / 200 * 100;

@@ -6,10 +6,11 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
-import {rows,columns} from './Data.js'
+import { rows, columns } from './Data.js'
 
 
 function Pokedex(props) {
+    // console.log(rows)
   return (
     <div className='h-full'>
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>

@@ -4,12 +4,14 @@ import {BrowserRouter as Router,Switch,Route,BrowserRouter, Routes} from 'react-
 import Teambuilder from './Teambuilder';
 import Navbar from './Navbar';
 import Home from './Home';
+import Data from './Data';
 
 function App() {
   return (
     <div className="App h-full">
       <Router>
-        <Navbar/>
+        <Navbar />
+        <Data/>
         <Routes>
             <Route path='/' exact element={<Home/>}/>
             <Route path='/teambuilder' exact element={<Teambuilder/>}/>
