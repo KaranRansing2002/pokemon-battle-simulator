@@ -29,42 +29,7 @@ function Data() {
   
  
   useEffect(() => {
-    axios.get('http://localhost:8000/pokemon/all').then((resp) => {
-      // console.log(resp.data);
-      resp.data.sort(compare)
-      for (let i = 0; i < resp.data.length; i++){
-        let arr = []; 
-        const rPath=`./images/${resp.data[i].name.toLowerCase()}.png`,altPath='images/abra.png'
-        arr.push(tryRequire(rPath));
-        for (let ele of tableArr) {
-          if (ele == 'types') {
-            let tps=""
-            for (let j = 0; j < resp.data[i][ele].length;j++) {
-              tps += resp.data[i][ele][j];
-              if(j!= resp.data[i][ele].length-1) tps+=" |"
-            }
-            arr.push(tps);
-          }
-          else if (ele == 'abilities') {
-            let tps=""
-            for (let j = 0; j < resp.data[i][ele].length;j++) {
-              tps += resp.data[i][ele][j];
-              if(j!= resp.data[i][ele].length-1) tps+=" |"
-            }
-            arr.push(tps);
-          }
-          else arr.push(resp.data[i][ele])
-        }
-        let ind = 0;
-        for (let ele of stats) {
-          arr.push(resp.data[i]['stats'][ind][ele])
-          ind++;
-        }
-        rows.push(arr);
-      }
-      // console.log("rows",rows);
-      // rows = [];
-    })
+    
   },[])
 
   return (
