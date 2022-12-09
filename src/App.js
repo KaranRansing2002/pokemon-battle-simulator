@@ -11,7 +11,6 @@ function App() {
     <div className="App h-full">
       <Router>
         <Navbar />
-        <Data/>
         <Routes>
             <Route path='/' exact element={<Home/>}/>
             <Route path='/teambuilder' exact element={<Teambuilder/>}/>

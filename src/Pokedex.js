@@ -9,45 +9,49 @@ import TableRow from '@mui/material/TableRow';
 import { rows, columns } from './Data.js'
 
 
-function Pokedex(props) {
+function Pokedex() {
     // console.log(rows)
   return (
     <div className='h-full'>
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
         <TableContainer sx={{ maxHeight: 605 }}>
             <Table stickyHeader aria-label="sticky table">
-            <TableHead>
-                <TableRow>
-                {columns.map((column) => (
-                    <TableCell
-                    key={column.id}
-                    align={column.align}
-                    style={{ minWidth: column.minWidth }}
-                    >
-                    {column.label}
-                    </TableCell>
-                ))}
-                </TableRow>
-            </TableHead>
-            <TableBody>
-                {
-                    rows.map((row,index)=>{
-                        return(
-                            <TableRow hover role="checkbox" tabIndex={-1} key={index} onClick={()=>props.sPokemon((oldarr)=>oldarr.length<6 ? [...oldarr,row[1]] : oldarr)}>
-                                {
-                                    columns.map((ele,index)=>{
-                                        return (
-                                            <TableCell key={index} align={ele.align}>
-                                                {ele.id==0 ? <img className='h-8 scale-[2.5]' src={row[0]}></img> : row[ele.id]}
-                                            </TableCell>
-                                        )
-                                    })
-                                }
-                            </TableRow>
-                        )
-                    })
-                }
-            </TableBody>
+                <TableHead>
+                    <TableRow>
+                    {columns.map((column,index) => (
+                        <TableCell
+                        key={column.id}
+                        align={column.align}
+                        style={{ minWidth: column.minWidth }}
+                        >
+                        {column.label}
+                        </TableCell>
+                    ))}
+                    </TableRow>
+                </TableHead>
+                <TableBody>
+                    {
+                        rows.map((row,ind)=>{
+                            // console.log(row[358])
+                            const name=rows[ind][2];
+                            return(
+                                ind<50 && <TableRow>
+                                    {
+                                        columns.map((column,index) => (
+                                        <TableCell
+                                        key={column.id}
+                                        align={column.align}
+                                        style={{ minWidth: column.minWidth }}
+                                        >
+                                        {index==1 ? <img className='h-8 scale-[2.5]' src={require(`./images/${name}.png`)}></img> : rows[ind][index]}
+                                        </TableCell>
+                                        ))
+                                    }
+                                </TableRow>
+                            )
+                        })
+                    }
+                </TableBody>
             </Table>
         </TableContainer>
         </Paper>

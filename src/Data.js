@@ -1,22 +1,16 @@
 import axios from 'axios'
-import React,{useEffect} from 'react'
+import React, {
+  useEffect, useState
+} from 'react'
 import mew from './images/mew.png'
 
-let rows = [
-]
-
 const tableArr=['name','types','abilities']
-const stats = ['hp',"Atk","Def","Spa","Spd","Spe","Bst"]
+// const stats = ['hp', "Atk", "Def", "Spa", "Spd", "Spe", "Bst"]
+
+let rows=[]
 
 function Data() {
 
-  const tryRequire = (path) => {
-    try {
-     return require(`${path}`);
-    } catch (err) {
-     return require('./images/mew.png');
-    }
-  };
   function compare( a, b ) {
     if ( a.id < b.id ){
       return -1;
@@ -26,10 +20,42 @@ function Data() {
     }
     return 0;
   }
-  
  
   useEffect(() => {
-    
+    // if (rows.length > 0) return;
+    rows = [];
+    axios.get("http://localhost:8000/pokemon/all").then((resp) => {
+      resp.data.sort(compare)
+      // console.log(data['types'],data["id"])
+      let row = [];
+      for (let i = 0; i < resp.data.length; i++){
+        const data = resp.data[i];
+        row.push(data["id"]);
+        row.push(data["imageUrl"]);
+        row.push(data["name"]);
+        let str = "";
+        for (let x of data["types"]) {
+          if (str.length > 0) str += " | ";
+          str+=x
+        }
+        row.push(str);
+        str = "";
+        for (let x of data["abilities"]) {
+          if (str.length > 0) str += " | ";
+          str+=x
+        }
+        row.push(str)
+        for (let x of data["stats"]) {
+          row.push(x)
+        }
+        rows.push(row)
+        row = [];
+      }
+      return rows
+    }).then((rows) => {
+      rows=rows.slice(0,396)
+      console.log("rows",rows);
+    })
   },[])
 
   return (
@@ -47,6 +73,7 @@ export default Data
 
 
 const types = [
+    
     {
       name: "normal",
       color: "#A8A878",
@@ -122,6 +149,11 @@ const types = [
 ];
   
 const columns = [
+    {
+    id: -1,
+    label: 'id',
+      minWidth : 50
+    },
     { 
         id: 0, 
         label: 'image', 
