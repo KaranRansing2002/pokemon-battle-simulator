@@ -7,6 +7,8 @@ import Data, {types} from './Data'
 import axios from 'axios';
 import mew from './images/mew.png'
 import { rows } from './Data.js'
+import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
+
 
 const tryRequire = (path) => {
   try {
@@ -21,6 +23,7 @@ function Teambuilder() {
   const [selectedPokemon, setSelectedPokemon] = useState([]);
   const [teamPokemon, setTeamPokemon] = useState('');
   const [pokemons, setPokemons] = useState([])
+  const [style,setStyle] = useState('hidden')
 
   useEffect(() => {
     const url1 = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
@@ -72,22 +75,31 @@ function Teambuilder() {
     // })
   },[pokemons])
 
+  const handleDelete=(index)=>{
+    setSelectedPokemon(selectedPokemon.filter((pok,ind) => index!=ind))
+  }
+
   return (
     <div className='h-full bg-slate-400'>
-      <div className='h-full p-4 '>
+      <div className='h-full p-4'>
         <Data/>
-        <Button onClick={() => setClicked(!clicked)} variant="contained" color="primary">
-          Add Team
-        </Button>
+        <div>
+          <Button onClick={() => setClicked(!clicked)} variant="contained" color="primary">
+            Add Team
+          </Button>
+        </div>
         <div className='bg-blue-900 h-full w-full flex'>
           <div className='h-full bg-orange-600 w-3/4'>
             {clicked && <Pokedex sPokemon={setSelectedPokemon} />}
           </div>
           <div className='w-1/4 rounded bg-gradient-to-r from-blue-500 to-green-400 h-full'>
-            <div className='w-full h-12 transparent flex'>
+            <div className='w-full h-14 flex justify-center '>
               {
-                selectedPokemon.map(pokemon => {
-                  return <img onClick={()=>setTeamPokemon(pokemon)} className='scale-125' src={require(`./images/${pokemon[2].toLowerCase()}.png`)} />
+                selectedPokemon.map((pokemon,index) => {
+                  return <div onMouseEnter={()=>setStyle('pokemon scale-75 absolute top-0 right-0')} onMouseLeave={()=>setStyle('hidden')} className='h-full w-1/6 border border-slate-900 flex relative cursor-pointer'>
+                      <div className='h-full w-full'><img onClick={()=>setTeamPokemon(pokemon)} src={require(`./images/${pokemon[2].toLowerCase()}.png`)} /></div>
+                      <div onClick={()=>handleDelete(index)} className={style}><DeleteTwoToneIcon className=''/></div>
+                    </div>
                 })
               }
             </div>
