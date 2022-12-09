@@ -72,81 +72,26 @@ export default Data
 
 
 
-const types = [
-    
-    {
-      name: "normal",
-      color: "#A8A878",
-    },
-    {
-      name: "fire",
-      color: "#EF8031",
-    },
-    {
-      name: "water",
-      color: "#6890F0",
-    },
-    {
-      name: "grass",
-      color: "#78C850",
-    },
-    {
-      name: "electric",
-      color: "#F8D030",
-    },
-    {
-      name: "ice",
-      color: "#98D8D8",
-    },
-    {
-      name: "fighting",
-      color: "#C03028",
-    },
-    {
-      name: "poison",
-      color: "#A040A0",
-    },
-    {
-      name: "ground",
-      color: "#E0C068",
-    },
-    {
-      name: "flying",
-      color: "#A890F0",
-    },
-    {
-      name: "psychic",
-      color: "#F85888",
-    },
-    {
-      name: "bug",
-      color: "#A8B820",
-    },
-    {
-      name: "rock",
-      color: "#B8A038",
-    },
-    {
-      name: "ghost",
-      color: "#705898",
-    },
-    {
-      name: "dark",
-      color: "#705848",
-    },
-    {
-      name: "dragon",
-      color: "#7038F8",
-    },
-    {
-      name: "steel",
-      color: "#B8B8D0",
-    },
-    {
-      name: "fairy",
-      color: "#F0B6BC",
-    },
-];
+const types = {
+  normal: "#A8A878",
+  fire: "#EF8031",
+  water: "#6890F0",
+  grass: "#78C850",
+  electric: "#F8D030",
+  ice: "#98D8D8",
+  fighting: "#C03028",
+  poison: "#A040A0",
+  ground: "#E0C068",
+  flying: "#A890F0",
+  psychic: "#F85888",
+  bug: "#A8B820",
+  rock: "#B8A038",
+  ghost: "#705898",
+  dark: "#705848",
+  dragon: "#7038F8",
+  steel: "#B8B8D0",
+  fairy: "#F0B6BC",
+};
   
 const columns = [
     {

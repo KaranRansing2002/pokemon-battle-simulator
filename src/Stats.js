@@ -30,17 +30,9 @@ const stats = [
 
 function Stats(props) {
     const pokemon = props.selectedPokemon;
-    let ind = 0;
-    for (let i = 0; i < rows.length; i++){
-        if (rows[i][1] == pokemon) {
-            ind = i;
-            break;
-        }
-    }
-    // console.log(rows[ind])
-    for (let i = 0; i < stats.length; i++){
-        stats[i].value = rows[ind][i + 4];
-        stats[i].value = stats[i].value / 200 * 100;
+    for (let i = 5; i < 11; i++){
+        stats[i-5].value = pokemon[i];
+        stats[i-5].value = stats[i-5].value / 2;
     }
   return (
       <div className="h-1/4 w-[90%] bg-[#202225] flex items-center justify-center">

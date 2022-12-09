@@ -9,8 +9,10 @@ import TableRow from '@mui/material/TableRow';
 import { rows, columns } from './Data.js'
 
 
-function Pokedex() {
+function Pokedex(props) {
     // console.log(rows)
+    const sPokemon = props.sPokemon
+    const [num,setNum] = useState(50);
   return (
     <div className='h-full'>
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
@@ -35,7 +37,7 @@ function Pokedex() {
                             // console.log(row[358])
                             const name=rows[ind][2];
                             return(
-                                ind<50 && <TableRow>
+                                ind<num && <TableRow key = {ind} onClick={()=>sPokemon((oldArr)=>oldArr.length<6 ? [...oldArr,row] : oldArr)}>
                                     {
                                         columns.map((column,index) => (
                                         <TableCell
