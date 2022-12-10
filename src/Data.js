@@ -5,12 +5,16 @@ import React, {
 import mew from './images/mew.png'
 
 const tableArr=['name','types','abilities']
+const baseUrl='http://localhost:8000/pokemon/'
+
 // const stats = ['hp', "Atk", "Def", "Spa", "Spd", "Spe", "Bst"]
 
 let rows=[]
+let rrows=[]
 
-function Data() {
-
+function Data(props) {
+  const {search,setSearch} = props
+  const [trial,setTrail] = useState('')
   function compare( a, b ) {
     if ( a.id < b.id ){
       return -1;
@@ -24,7 +28,7 @@ function Data() {
   useEffect(() => {
     // if (rows.length > 0) return;
     rows = [];
-    axios.get("http://localhost:8000/pokemon/all").then((resp) => {
+    axios.get(`http://localhost:8000/pokemon/`).then((resp) => {
       resp.data.sort(compare)
       // console.log(data['types'],data["id"])
       let row = [];
@@ -54,9 +58,20 @@ function Data() {
       return rows
     }).then((rows) => {
       rows=rows.slice(0,396)
+      rrows = [...rows]
       console.log("rows",rows);
     })
   },[])
+  
+  if(search.length>0){
+    // setSearch([...search,''])
+    rows=[...rrows.filter((x)=>{
+      return (x[2].substring(0,Math.min(x[2].length,search.length))==search)
+    })]
+  }
+  else {
+    rows = [...rrows]
+  }
 
   return (
     <div>
@@ -66,10 +81,6 @@ function Data() {
 }
 
 export default Data
-
-
-
-
 
 
 const types = {

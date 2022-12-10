@@ -7,7 +7,7 @@ import TableContainer from '@mui/material/TableContainer';
 import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
-import { rows, columns } from './Data.js'
+import { columns,rows } from './Data.js'
 
 
 function Pokedex(props) {
