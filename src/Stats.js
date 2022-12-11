@@ -3,7 +3,7 @@ import {rows} from './Data'
 
 const stats = [
     {
-        name: "HP.",
+        name: "HP",
         value: 0,
     },
     {

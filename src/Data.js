@@ -28,7 +28,7 @@ function Data(props) {
   useEffect(() => {
     // if (rows.length > 0) return;
     rows = [];
-    axios.get(`http://localhost:8000/pokemon/`).then((resp) => {
+    axios.get(`http://localhost:8000/pokemon/all`).then((resp) => {
       resp.data.sort(compare)
       // console.log(data['types'],data["id"])
       let row = [];
