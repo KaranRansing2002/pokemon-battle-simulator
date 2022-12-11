@@ -57,16 +57,16 @@ function Data(props) {
       }
       return rows
     }).then((rows) => {
-      rows=rows.slice(0,396)
+      rows=rows.slice(0,906)
       rrows = [...rows]
-      console.log("rows",rows);
+      // console.log("rows",rows);
     })
   },[])
   
   if(search.length>0){
     // setSearch([...search,''])
     rows=[...rrows.filter((x)=>{
-      return (x[2].substring(0,Math.min(x[2].length,search.length))==search)
+      return ((x[2].substring(0,Math.min(x[2].length,search.length))==search) || (x[3].split(" | ").includes(search)))
     })]
   }
   else {
