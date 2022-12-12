@@ -57,7 +57,7 @@ function Data(props) {
       }
       return rows
     }).then((rows) => {
-      rows=rows.slice(0,906)
+      rows=rows.slice(0,900)
       rrows = [...rows]
       // console.log("rows",rows);
     })

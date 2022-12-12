@@ -9,6 +9,7 @@ import mew from './images/mew.png'
 import { rows } from './Data.js'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import TextField from '@mui/material/TextField';
+import moves from './movesdb';
 
 const baseUrl='http://localhost:8000/pokemon/'
 
@@ -82,9 +83,39 @@ function Teambuilder() {
     setTeamPokemon('')
   }
 
-  useEffect(()=>{
-    
-  },[search])
+  // useEffect(()=>{
+  //   for(let i=0;i<moves.length;i++){
+  //     let move={};
+  //     move["Id"]=i;
+  //     let ok=true;
+  //     for(let x of Object.keys(moves[i])){
+  //       if(x=="Name_URL" || x=="TM" || x=="Type_URL" ){
+  //         continue;
+  //       }
+  //       if((x=="Effect" && moves[i][x].includes("Z-Move")) || (moves[i]["Name"].includes("G-Max")) || (moves[i]["Name"].includes("Max"))){
+  //         ok=false;
+  //         break;
+  //       }
+  //       move[x]=moves[i][x];
+  //     }
+  //     if(!ok){
+  //       continue; 
+  //     }
+  //     move["Pokemon"]=[]
+  //     move['Name']=move['Name'].toLowerCase().replaceAll(" ","-");
+  //     if(move["Accuracy"]=='—'){
+  //       move["Accuracy"] = "∞"
+  //     }
+  //     axios.get(`https://pokeapi.co/api/v2/move/${move["Name"]}`).then((resp)=>{
+  //       if(resp.status==200){
+  //         const data = resp.data["learned_by_pokemon"];
+  //         move["Pokemon"] = data.map((dat) => dat.name);
+  //         // console.log("data",move["Pokemon"]);
+  //         axios.post('http://localhost:8000/moves/',move).then(resp=>console.log("data added.",move.Name))
+  //       }
+  //     })
+  //   }
+  // },[])
 
   return (
     <div className='h-full bg-slate-400'>
