@@ -10,6 +10,7 @@ import { rows } from './Data.js'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import TextField from '@mui/material/TextField';
 import moves from './movesdb';
+import MoveTable from './MoveTable';
 
 const baseUrl='http://localhost:8000/pokemon/'
 
@@ -28,6 +29,11 @@ function Teambuilder() {
   const [pokemons, setPokemons] = useState([])
   const [style,setStyle] = useState('hidden')
   const [search,setSearch] = useState('')
+  const [moveClick,setMoveClick] = useState(false)
+  const [move1,setMove1] = useState('')
+  const [move2,setMove2] = useState('')
+  const [move3,setMove3] = useState('')
+  const [move4,setMove4] = useState('')
 
   useEffect(() => {
     const url1 = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
@@ -118,12 +124,12 @@ function Teambuilder() {
   // },[])
 
   return (
-    <div className='h-full bg-slate-400'>
+    <div className='h-full bg-slate-800'>
       <div className='h-full p-4'>
         <Data search={search} setSearch={setSearch}/>
         <div className='flex w-full'>
           <div>
-            <Button onClick={() => setClicked(!clicked)} variant="contained" color="primary">
+            <Button onClick={() => {setClicked(!clicked); setMoveClick(false)}} variant="contained" color="primary">
               Add Team
            </Button>
           </div>
@@ -134,6 +140,7 @@ function Teambuilder() {
         <div className='bg-blue-900 h-full w-full flex'>
           <div className='h-full bg-orange-600 w-3/4'>
             {clicked && <Pokedex sPokemon={setSelectedPokemon} />}
+            {moveClick && <MoveTable selectedPokemon={teamPokemon} />}
           </div>
           <div className='w-1/4 rounded bg-gradient-to-r from-blue-500 to-green-400 h-full'>
             <div className='w-full h-14 flex justify-center '>
@@ -147,11 +154,11 @@ function Teambuilder() {
               }
             </div>
             {teamPokemon && <h2 className='w-full text-center'>{teamPokemon[2]}</h2>}
-            <div className='w-full my-8 h-1/4 flex justify-center'>
+            <div className='w-full mt-8 h-1/4 flex justify-center'>
               {teamPokemon && <img className='scale-[1.5]' src={require(`./images/${teamPokemon[2]}.png`)} />}
             </div>
             {
-              <div className='w-full flex justify-center '>
+              <div className='w-full mt-2 flex justify-center '>
                 <div className='w-full flex justify-center flex-start '>
                   {
                     teamPokemon && teamPokemon[3].split(" | ").map((typs)=>{
@@ -171,7 +178,15 @@ function Teambuilder() {
             }
             <div className='w-full flex justify-center'> 
               {teamPokemon && <Stats selectedPokemon={teamPokemon} />}
-            </div>
+            </div> 
+            {
+             teamPokemon&& <div className='w-full flex flex-col items-center '>
+                <input onClick={()=>{setClicked(false); setMoveClick(true)}} className='w-5/6 mt-1 border rounded' placeholder='move1'></input>
+                <input onClick={()=>{setClicked(false); setMoveClick(true)}} className='w-5/6 mt-1 border rounded' placeholder='move2'></input>
+                <input onClick={()=>{setClicked(false); setMoveClick(true)}} className='w-5/6 mt-1 border rounded' placeholder='move3'></input>
+                <input onClick={()=>{setClicked(false); setMoveClick(true)}} className='w-5/6 mt-1 border rounded' placeholder='move4'></input>
+              </div> 
+            }
           </div>
         </div>
       </div>
