@@ -1,6 +1,5 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import mew from "./images/mew.png";
 
 const tableArr = ["name", "types", "abilities"];
 const baseUrl = "http://localhost:8000/pokemon/";
@@ -9,10 +8,9 @@ const baseUrl = "http://localhost:8000/pokemon/";
 
 let rows = [];
 let rrows = [];
-let mrows = [];
 
 function Data(props) {
-  const { search, setSearch } = props;
+  const { search, setSearch, teamPokemon} = props;
   const [trial, setTrail] = useState("");
   function compare(a, b) {
     if (a.id < b.id) {
@@ -23,13 +21,6 @@ function Data(props) {
     }
     return 0;
   }
-
-  useEffect(() => {
-    axios.get(`http://localhost:8000/moves/all`).then((resp) => {
-      mrows = resp.data;
-      // console.log(resp);
-    });
-  }, []);
 
   useEffect(() => {
     // if (rows.length > 0) return;
@@ -234,4 +225,4 @@ const colMoves = [
   },
 ];
 
-export { rows, types, columns, colMoves, mrows };
+export { rows, types, columns, colMoves };

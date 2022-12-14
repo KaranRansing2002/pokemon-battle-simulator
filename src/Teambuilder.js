@@ -22,6 +22,8 @@ const tryRequire = (path) => {
   }
 };
 
+let selMoves={}
+
 function Teambuilder() {
   const [clicked, setClicked] = useState(false);
   const [selectedPokemon, setSelectedPokemon] = useState([]);
@@ -34,6 +36,8 @@ function Teambuilder() {
   const [move2,setMove2] = useState('')
   const [move3,setMove3] = useState('')
   const [move4,setMove4] = useState('')
+  const [currPokemon,setCurrPokemon] = useState(teamPokemon[2])
+  const [currInput,setCurrInput] = useState(0)
 
   useEffect(() => {
     const url1 = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
@@ -41,7 +45,7 @@ function Teambuilder() {
       setPokemons(resp.data.results);
     });
   }, []);
-
+  // console.log("teamPokemon", teamPokemon[2])
   useEffect(() => {
     
     // const urls = [];
@@ -123,10 +127,32 @@ function Teambuilder() {
   //   }
   // },[])
 
+  useEffect(()=>{
+    if(Object.keys(selMoves).includes(teamPokemon[2])){
+      setMove1(selMoves[teamPokemon[2]][0])
+      setMove2(selMoves[teamPokemon[2]][1])
+      setMove3(selMoves[teamPokemon[2]][2])
+      setMove4(selMoves[teamPokemon[2]][3])
+    }
+    else{
+      setMove1('');
+      setMove2('');
+      setMove3('');
+      setMove4('');
+    }
+  },[teamPokemon])
+
+  const handleSave=()=>{
+    selMoves[teamPokemon[2]]=[move1,move2,move3,move4]
+    alert("Saved successfully")
+    console.log(selMoves)
+  }
+
+
   return (
     <div className='h-full bg-slate-800'>
       <div className='h-full p-4'>
-        <Data search={search} setSearch={setSearch}/>
+        <Data search={search} setSearch={setSearch} teamPokemon={teamPokemon} currPokemon={currPokemon} setCurrPokemon={setCurrPokemon}/>
         <div className='flex w-full'>
           <div>
             <Button onClick={() => {setClicked(!clicked); setMoveClick(false)}} variant="contained" color="primary">
@@ -140,7 +166,7 @@ function Teambuilder() {
         <div className='bg-blue-900 h-full w-full flex'>
           <div className='h-full bg-orange-600 w-3/4'>
             {clicked && <Pokedex sPokemon={setSelectedPokemon} />}
-            {moveClick && <MoveTable selectedPokemon={teamPokemon} />}
+            {moveClick && <MoveTable teamPokemon={teamPokemon} currInput={currInput} vari={[move1,move2,move3,move4]} func={[setMove1,setMove2,setMove3,setMove4]}/>}
           </div>
           <div className='w-1/4 rounded bg-gradient-to-r from-blue-500 to-green-400 h-full'>
             <div className='w-full h-14 flex justify-center '>
@@ -154,8 +180,8 @@ function Teambuilder() {
               }
             </div>
             {teamPokemon && <h2 className='w-full text-center'>{teamPokemon[2]}</h2>}
-            <div className='w-full mt-8 h-1/4 flex justify-center'>
-              {teamPokemon && <img className='scale-[1.5]' src={require(`./images/${teamPokemon[2]}.png`)} />}
+            <div className='w-full mt-2 h-[25%] flex justify-center'>
+              {teamPokemon && <img className='scale-[1.2]' src={require(`./images/${teamPokemon[2]}.png`)} />}
             </div>
             {
               <div className='w-full mt-2 flex justify-center '>
@@ -180,11 +206,12 @@ function Teambuilder() {
               {teamPokemon && <Stats selectedPokemon={teamPokemon} />}
             </div> 
             {
-             teamPokemon&& <div className='w-full flex flex-col items-center '>
-                <input onClick={()=>{setClicked(false); setMoveClick(true)}} className='w-5/6 mt-1 border rounded' placeholder='move1'></input>
-                <input onClick={()=>{setClicked(false); setMoveClick(true)}} className='w-5/6 mt-1 border rounded' placeholder='move2'></input>
-                <input onClick={()=>{setClicked(false); setMoveClick(true)}} className='w-5/6 mt-1 border rounded' placeholder='move3'></input>
-                <input onClick={()=>{setClicked(false); setMoveClick(true)}} className='w-5/6 mt-1 border rounded' placeholder='move4'></input>
+             teamPokemon && <div className='w-full flex flex-col items-center '>
+                <input value={move1} onChange={(e)=>setMove1(e.target.value)} onClick={()=>{setClicked(false); setMoveClick(true); setCurrInput(0)}} className='w-5/6 mt-1 border rounded' placeholder='move1'></input>
+                <input value={move2} onChange={(e)=>setMove2(e.target.value)} onClick={()=>{setClicked(false); setMoveClick(true); setCurrInput(1)}} className='w-5/6 mt-1 border rounded' placeholder='move2'></input>
+                <input value={move3} onChange={(e)=>setMove3(e.target.value)} onClick={()=>{setClicked(false); setMoveClick(true); setCurrInput(2)}} className='w-5/6 mt-1 border rounded' placeholder='move3'></input>
+                <input value={move4} onChange={(e)=>setMove4(e.target.value)} onClick={()=>{setClicked(false); setMoveClick(true); setCurrInput(3)}} className='w-5/6 mt-1 border rounded' placeholder='move4'></input>
+                <div className=''><Button onClick={()=>handleSave()} variant="contained">Save</Button></div>
               </div> 
             }
           </div>
