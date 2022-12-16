@@ -11,6 +11,26 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import TextField from '@mui/material/TextField';
 import moves from './movesdb';
 import MoveTable from './MoveTable';
+import { createTheme } from "@mui/material/styles";
+import { purple, red, green } from "@mui/material/colors";
+import { Link } from "react-router-dom";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      light: "#26a69a",
+      main: "#009688",
+      dark: "#00897b",
+      contrastText: "#fff",
+    },
+    secondary: {
+      light: "#ff7961",
+      main: "#f44336",
+      dark: "#ba000d",
+      contrastText: "#000",
+    },
+  },
+});
 
 const baseUrl='http://localhost:8000/pokemon/'
 
@@ -179,14 +199,42 @@ function Teambuilder() {
     <div className='h-full bg-slate-800'>
       <div className='h-full p-4'>
         <Data search={search} setSearch={setSearch} teamPokemon={teamPokemon} currPokemon={currPokemon} setCurrPokemon={setCurrPokemon}/>
-        <div className='flex w-full'>
+        <div className="flex w-full">
           <div>
-            <Button onClick={() => {setClicked(!clicked); setMoveClick(false)}} variant="contained" color="primary">
+            <Button
+              onClick={() => {
+                setClicked(!clicked);
+                setMoveClick(false);
+              }}
+              variant="contained"
+              color="primary"
+            >
               Add Team
-           </Button>
+            </Button>
           </div>
-          <div className='rounded m-2'>
-            <input placeholder='Search Pokemon' value={search} onChange={(e)=>setSearch(e.target.value)}></input>
+          <div className="rounded m-2">
+            <input
+              placeholder="Search Pokemon"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+            ></input>
+          </div>
+          <div>
+            <Link to="/battle">
+              <Button variant="contained" theme={theme} >
+                Battle
+              </Button>
+            </Link>
+          </div>
+          <div className="ml-2">
+            <Button variant="contained" color="primary">
+              Ladder
+            </Button>
+          </div>
+          <div className="ml-2">
+            <Button variant="contained" color="primary">
+              Damage Calculator
+            </Button>
           </div>
         </div>
         <div className='bg-blue-900 h-full w-full flex'>
@@ -252,3 +300,4 @@ function Teambuilder() {
 }
 
 export default Teambuilder
+export {selMoves}

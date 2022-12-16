@@ -5,6 +5,7 @@ import Teambuilder from './Teambuilder';
 import Navbar from './Navbar';
 import Home from './Home';
 import Data from './Data';
+import Battle from './Battle';
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Routes>
             <Route path='/' exact element={<Home/>}/>
             <Route path='/teambuilder' exact element={<Teambuilder/>}/>
+            <Route path='/battle' exact element={<Battle/>}/>
         </Routes>
       </Router>
     </div>
