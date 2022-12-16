@@ -8,6 +8,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import TablePagination from '@mui/material/TablePagination';
 import { columns,rows } from './Data.js'
+import uuid from 'react-uuid';
+
 
 // const tryRequire = (path) => {
 //     try {
@@ -56,7 +58,7 @@ function Pokedex(props) {
                             // console.log(row[358])
                             const name=rows[ind][2];
                             return(
-                                ind<num && <TableRow key = {ind} onClick={()=>sPokemon((oldArr)=>oldArr.length<6 ? [...oldArr,row] : oldArr)}>
+                                ind<num && <TableRow key = {ind} onClick={()=>sPokemon((oldArr)=>oldArr.length<6 ? [...oldArr,[uuid(),...row.filter((pk,ind)=>ind!=0)]] : oldArr)}>
                                     {
                                         columns.map((column,index) => (
                                         <TableCell

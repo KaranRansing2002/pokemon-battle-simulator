@@ -49,7 +49,7 @@ function MoveTable(props) {
 
     useEffect(() => {
       axios.get(`http://localhost:8000/moves/all`).then((resp) => {
-        console.log(teamPokemon[2])
+        // console.log(teamPokemon[2])
         const data = resp.data.filter((res)=>res.Pokemon.includes(teamPokemon[2]));
         for(let i=0;i<data.length;i++){
           data[i]["Name"]=capitalizeFirstLetter(data[i]["Name"])
@@ -69,7 +69,7 @@ function MoveTable(props) {
         setRowsPerPage(+event.target.value);
         setPage(0);
     };
-    console.log("mrows",mrows)
+    // console.log("mrows",mrows)
   return (
     <div className="h-full">
       <Paper sx={{ width: "100%", overflow: "hidden" }}>
@@ -98,7 +98,7 @@ function MoveTable(props) {
                           key={col.id}
                           align={col.align}
                           style={{ minWidth: col.minWidth , cursor : "pointer"}}
-                          onClick={()=>{func[currInput](row["Name"].toLowerCase()); setTrigger(!trigger)}}
+                          onClick={()=>{!vari.includes(row["Name"].toLowerCase()) && func[currInput](row["Name"].toLowerCase()); setTrigger(!trigger)}}
                         >
                           {col.label === "Category" ? (
                             <img className='scale-75' src={row[col.label]} />
