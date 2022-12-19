@@ -1,0 +1,29 @@
+.pokemon-b{
+    /* background-color: aqua; */
+    animation: spinball 2s;
+}
+.pokemon-rev{
+    animation : spinball-rev 2s ;
+    animation-iteration-count: 1;
+}
+
+.hpbar{
+    transition: width 0.5s linear;
+}
+
+@keyframes spinball {
+    0%  {
+        transform : scale(0.75); 
+    }
+    100%{
+        transform : scale(0)
+    }
+}
+@keyframes spinball-rev {
+    0%  {
+        transform : scale(0)
+    }
+    100%{
+        transform : scale(1); 
+    }
+}
