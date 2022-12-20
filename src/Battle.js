@@ -3,8 +3,14 @@ import bgs from './battleBackgrounds'
 import { selMoves } from './Teambuilder';
 import './Battle.css' 
 import axios from 'axios';
+import Player1 from './Player1';
+import Opponent from './Opponent';
+import { set } from 'lodash';
 
 const imgadd=bgs[Math.floor(Math.random()*bgs.length)];
+
+let pokemonhp = [] 
+let pokeind={}
 
 function Battle() {
     const team1=selMoves;
@@ -12,7 +18,13 @@ function Battle() {
     const [classp,setClassp] = useState('')
     const [selectedPokemon,setSelectedPokemon] = useState('')
     const [stats,setStats] = useState([])
-    const [hp,setHp] = useState(100)
+    const [hp, setHp] = useState(100)
+    const [opponentPokemon, setOpponentPokemon] = useState('')
+    const [opphp,setOpphp] = useState(100)
+    const [classOpp, setClassOpp] = useState('')
+    const [atk, setAtk] = useState(0)
+  const [ind, setInd] = useState(0)
+  const [currHp,setCurrHp] = useState(0)
 
     useEffect(()=>{
       setInterval(()=>{
@@ -23,27 +35,31 @@ function Battle() {
         axios.get(`http://localhost:8000/pokemon/${selectedPokemon}`).then((resp)=>{
           console.log(resp)
           setStats(resp.data[0].stats)
+          if (!Object.keys(pokeind).includes(selectedPokemon)) {
+            pokeind[selectedPokemon] = pokemonhp.length;
+            console.log(stats)
+            pokemonhp.push([selectedPokemon, resp.data[0].stats[0], resp.data[0].stats[0]]);
+          }
+          // setInd(pokeind[selectedPokemon])
+          // console.log(ind,pokemonhp)
+          setCurrHp(pokemonhp[ind][1]/pokemonhp[ind][2]*100)
         })
+        
       }
-      console.log("stats",stats)
+      
+      // console.log("stats",stats)
     },[selectedPokemon])
-
+    console.log("data",selectedPokemon,ind,currHp,pokemonhp)
   return (
     <div className='h-full w-full'>
-      <button onClick={()=>setHp(Math.max(hp-40,0))}>Attack</button>
+      <button onClick={() => { setAtk(20); pokemonhp[ind][1] -= Math.min(pokemonhp[ind][1], 20); setCurrHp(pokemonhp[ind][1]/pokemonhp[ind][2]*100) } } className='m-2'>Attack</button>
+      <button onClick={() => { setOpponentPokemon('rayquaza'); setClassOpp('pokemon-rev') }}>Rayquaza</button>
       <div className={`flex flex-col h-3/5 m-4 w-1/2 border-4 border-black rounded-lg bg-[url(${imgadd})] bg-cover bg-no-repeat`}>
-        <div className='h-1/2 w-full flex justify-end '>
-            <img className={`${classp} m-10 `} src="https://play.pokemonshowdown.com/sprites/ani/rayquaza.gif"></img>
+        <div className='h-1/2 w-1/2 self-end flex'>
+          {selectedPokemon && <Opponent opphp={opphp} classp={classOpp} opponentPokemon={opponentPokemon} />}
         </div>
-        <div className='h-1/2 w-1/2 flex flex-col justify-center items-center '>
-            <div className='h-full w-full flex items-center justify-center'>
-              <div className={`h-[15px] ml-4 w-[60%] bg-white border-black border-2 rounded`}>
-                <div className={`w-[${hp}%] h-full bg-green-400 hpbar`}>
-                </div>
-              </div>
-              <span className='text-sm h-[15px] border-black border flex items-center rounded bg-slate-400'>{100}%</span>
-              </div>
-            <img className={`${classp} ml-4 mb-4 max-h-36  object-contain `} src={`https://play.pokemonshowdown.com/sprites/ani-back/${selectedPokemon}.gif`}></img>
+        <div className='h-1/2 w-1/2 flex justify-center items-center'>
+          {selectedPokemon && <Player1 hp={currHp } ind={pokeind[selectedPokemon]} classp={classp} selectedPokemon={selectedPokemon} />}
         </div>
       </div>
 
@@ -52,9 +68,9 @@ function Battle() {
       </div>
       <div className='w-1/2 h-[10%] bg-green-400 mx-4 flex space-x-[8%]'>
         {
-            Object.keys(team1).map(pokemon => {
-                console.log(team1[pokemon].name)
-                return <img onClick={()=>{setSelectedPokemon(team1[pokemon].name); console.log("clicked")}} className='border-2 border-black scale-100 hover:scale-125' src={require(`./images/${team1[pokemon].name}.png`)} />
+          Object.keys(team1).map((pokemon,index) => {
+            // console.log(team1[pokemon].name)
+            return <img onClick={() => { setSelectedPokemon(team1[pokemon].name);setInd(index)}} className='border-2 border-black scale-100 hover:scale-125' src={require(`./images/${team1[pokemon].name}.png`)} />
             })
         }
       </div>
@@ -63,3 +79,4 @@ function Battle() {
 }
 
 export default Battle
+export {pokemonhp}
