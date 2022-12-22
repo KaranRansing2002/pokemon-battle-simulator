@@ -15,7 +15,7 @@ function Player1(props) {
                         <div className={`w-[${hp}%] h-full bg-green-400 hpbar rounded-lg`}>
                         </div>
                     </div>
-                    <span className='text-sm h-[15px] border-black border flex items-center rounded bg-slate-400'>{100}%</span>
+                    <span className='text-sm h-[15px] border-black border flex items-center rounded bg-slate-400'>{Math.ceil(hp)}%</span>
                 </div>
                 <img className={`${classp} max-h-36 mb-4 object-contain `} src={`https://play.pokemonshowdown.com/sprites/ani-back/${selectedPokemon}.gif`}></img>
             </div>

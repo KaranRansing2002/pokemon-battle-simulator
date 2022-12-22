@@ -137,3 +137,4 @@ function MoveTable(props) {
 }
 
 export default MoveTable;
+export {rows}
