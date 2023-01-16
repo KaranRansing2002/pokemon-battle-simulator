@@ -32,7 +32,7 @@ const theme = createTheme({
   },
 });
 
-const baseUrl='http://localhost:8000/pokemon/'
+const baseUrl='http://localhost:8000'
 
 const tryRequire = (path) => {
   try {
@@ -64,12 +64,12 @@ function Teambuilder() {
   const [choosenAbility,setChoosenAbility] = useState('')
   const [validate,setValidate] = useState(false)
 
-  useEffect(() => {
-    const url1 = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
-    axios.get(url1).then((resp) => {
-      setPokemons(resp.data.results);
-    });
-  }, []);
+  // useEffect(() => {
+  //   const url1 = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
+  //   axios.get(url1).then((resp) => {
+  //     setPokemons(resp.data.results);
+  //   });
+  // }, []);
   // console.log("teamPokemon", teamPokemon[2])
   useEffect(() => {
     
@@ -153,7 +153,7 @@ function Teambuilder() {
   // },[])
 
   useEffect(()=>{
-    console.log("here",teamPokemon[0]);
+    // console.log("here",teamPokemon[0]);
     if(Object.keys(selMoves).includes(teamPokemon[0])){
       setMove1(selMoves[teamPokemon[0]].moves[0])
       setMove2(selMoves[teamPokemon[0]].moves[1])
@@ -190,8 +190,19 @@ function Teambuilder() {
       selMoves[teamPokemon[0]]={"name" : teamPokemon[2],"moves" : mmoves,"ability" : choosenAbility,"stats" : teamPokemon.slice(5)}; 
       // selMoves["ability"]=choosenAbility
       alert("Saved successfully")
-      console.log(selMoves)
+      // console.log(selMoves)
     }
+  } 
+
+  const handleSaveTeam = async () => {
+    console.log("handlesaveteam",selMoves)
+    let resp = await axios.post(`http://localhost:8000/user/team`, selMoves,{
+      withCredentials: true
+    });
+    console.log("selmoves=",selMoves)
+    resp = resp.data; 
+    console.log("resp",resp)
+    alert(resp.message);
   }
 
 
@@ -232,9 +243,16 @@ function Teambuilder() {
             </Button>
           </div>
           <div className="ml-2">
+            <Link to="/damagecalculator">
             <Button variant="contained" color="primary">
               Damage Calculator
-            </Button>
+            </Button></Link>
+          </div>
+          <div className="ml-2">
+            <Link to="/myteam">
+            <Button variant="contained" color="primary">
+              My Teams
+            </Button></Link>
           </div>
         </div>
         <div className='bg-blue-900 h-full w-full flex'>
@@ -289,11 +307,14 @@ function Teambuilder() {
                 <input value={move2} onChange={(e)=>setMove2(e.target.value)} onClick={()=>{setClicked(false); setMoveClick(true); setCurrInput(1)}} className='w-5/6 mt-1 border rounded' placeholder='move2'></input>
                 <input value={move3} onChange={(e)=>setMove3(e.target.value)} onClick={()=>{setClicked(false); setMoveClick(true); setCurrInput(2)}} className='w-5/6 mt-1 border rounded' placeholder='move3'></input>
                 <input value={move4} onChange={(e)=>setMove4(e.target.value)} onClick={()=>{setClicked(false); setMoveClick(true); setCurrInput(3)}} className='w-5/6 mt-1 border rounded' placeholder='move4'></input>
-                <div className=''><Button onClick={()=>handleSave()} variant="contained">Save</Button></div>
+                <div className='flex justify-center space-x-2 '>
+                  <Button onClick={() => handleSave()} variant="contained">Save</Button>
+                  <Button onClick={() => handleSaveTeam()} variant="contained">Save Team</Button>
+                </div>
               </div> 
             }
           </div>
-        </div>
+        </div> 
       </div>
     </div>
   )

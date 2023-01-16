@@ -5,6 +5,7 @@ import './Battle.css'
 import axios from 'axios';
 import Player1 from './Player1';
 import Opponent from './Opponent';
+import { Button } from '@mui/material';
 
 const imgadd=bgs[Math.floor(Math.random()*bgs.length)];
 
@@ -71,18 +72,18 @@ function Battle() {
           {selectedPokemon && <Player1 hp={currHp } ind={ind} classp={classp} selectedPokemon={selectedPokemon} />}
         </div> 
       </div>
-
-      <div className='w-1/2 h-[10%] bg-green-400 mx-4 my-2 flex border-2 border-black'>
+ 
+      <div className='w-1/2 h-[10%]  mx-4 my-2 flex border-2 border-black items-center'>
         {  
           selectedPokemon.length>0 && moves.map(move => {
-            return <div className='w-1/4 border  flex flex-col justify-center items-center'>
+            return <div className='h-12 w-full m-2 flex'><Button variant="contained" className='w-full border h-full flex flex-col justify-center items-center '>
               <h3>{move}</h3> 
-              <h3>{move.length>0 && movestats[move]["PP"]}</h3>
-            </div> 
-          })
-        }
-      </div>
-      <div className='w-1/2 h-[10%] bg-green-400 mx-4 flex space-x-[8%]'>
+              <h3>{move.length>0 && movestats[move]["PP"] && movestats[move]["PP"]}</h3>
+            </Button></div>  
+          })     
+        }      x
+      </div>   
+      <div className='w-1/2 h-[10%] bg-green-400 mx-4 flex space-x-[8%]'>  
         {
           Object.keys(team1).map((pokemon,index) => {
             // console.log(team1[pokemon].name)
