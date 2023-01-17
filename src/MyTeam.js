@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import PokemonSlots from './PokemonSlots'
 import Button from '@mui/material/Button';
 import { createTheme } from "@mui/material/styles";
+import { Link } from "react-router-dom";
 
 
 const theme = createTheme({
@@ -22,12 +23,11 @@ const theme = createTheme({
   },
 });
 
-
+let myTeam=undefined;
 
 function MyTeam({ userinfo }) {
   const [selectedTeam, setSelectedTeam] = useState(undefined)
   const [teams, setTeams] = useState([]) 
-
   useEffect(() => {
     axios.get('http://localhost:8000/user/team', {
       withCredentials : true
@@ -39,7 +39,13 @@ function MyTeam({ userinfo }) {
         arr.map(obj=>console.log(team[obj]))
       })
     })
-  },[])
+  }, [])
+
+  useEffect(() => {
+    if (selectedTeam != undefined) {
+      myTeam = teams[selectedTeam]
+    }
+  },[selectedTeam])
 
   return (
     <div className='h-full w-full flex flex-col items-center '>
@@ -47,11 +53,17 @@ function MyTeam({ userinfo }) {
           selectedTeam === undefined ? <h3>Please build and select a team</h3> : 
           <PokemonSlots team={teams[selectedTeam]} colors={"bg-green-400"} />
         }</div>
+        {selectedTeam != undefined &&
+          <Link to="/battle">
+              <Button variant="contained" theme={theme} >
+                Battle
+              </Button>
+          </Link>}
           Your Teams
         {
           teams && teams.length > 0 &&
           teams.map((team, index) => {
-            return <div className='h-auto m-4  flex '>
+            return <div className='h-auto m-4 flex '>
               {teams.length>0 && <PokemonSlots team={teams[index]} colors={"bg-purple-400"} />}
               <div className='h-full flex items-center mx-4'>
                 {
@@ -66,3 +78,4 @@ function MyTeam({ userinfo }) {
 }
 
 export default MyTeam
+export {myTeam}

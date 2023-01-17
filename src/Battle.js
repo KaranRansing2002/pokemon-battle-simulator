@@ -6,6 +6,8 @@ import axios from 'axios';
 import Player1 from './Player1';
 import Opponent from './Opponent';
 import { Button } from '@mui/material';
+import {myTeam} from './MyTeam';
+import PokemonSlots from './PokemonSlots';
 
 const imgadd=bgs[Math.floor(Math.random()*bgs.length)];
 
@@ -17,8 +19,10 @@ const baseUrl = 'http://localhost:8000'
 let pp=[]
 
 function Battle() {
-    const team1=selMoves;
-    const team2=selMoves;
+  delete myTeam["email"]
+  const team1 = myTeam == undefined ? selMoves : myTeam;
+  const team2 = myTeam == undefined ? selMoves : myTeam;
+  console.log(team1,selMoves);
     const [classp,setClassp] = useState('')
     const [selectedPokemon,setSelectedPokemon] = useState('charizard')
     const [stats,setStats] = useState([])
@@ -58,7 +62,7 @@ function Battle() {
       console.log("pokemonhp",pokemonhp[ind][1])
       // console.log(moves)
     }
-  },[ind])
+  }, [ind])
     
   return (
     <div className='h-full w-full'>
@@ -73,24 +77,24 @@ function Battle() {
         </div> 
       </div>
  
-      <div className='w-1/2 h-[10%]  mx-4 my-2 flex border-2 border-black items-center'>
+      <div className='w-1/2 h-[12%]  mx-4 my-2 flex border-2 border-black items-center'>
         {  
           selectedPokemon.length>0 && moves.map(move => {
-            return <div className='h-12 w-full m-2 flex'><Button variant="contained" className='w-full border h-full flex flex-col justify-center items-center '>
-              <h3>{move}</h3> 
-              <h3>{move.length>0 && movestats[move]["PP"] && movestats[move]["PP"]}</h3>
-            </Button></div>  
+            return (
+              <div className='h-[95%] border-black border-2 w-1/4 rounded'>
+                <button class="bg-red-200 hover:bg-red-300 active:bg-red-400 text-black font-bold py-2 px-4 h-full w-full">
+                  <h3>{move}</h3> 
+                  <h3>{move.length>0 && movestats[move]["PP"] && movestats[move]["PP"]}</h3>
+                </button>
+              </div>
+            ) 
           })     
-        }      x
+        }      
       </div>   
-      <div className='w-1/2 h-[10%] bg-green-400 mx-4 flex space-x-[8%]'>  
-        {
-          Object.keys(team1).map((pokemon,index) => {
-            // console.log(team1[pokemon].name)
-            return <img onClick={() => { setSelectedPokemon(team1[pokemon].name); setInd(index); setMoves(team1[pokemon].moves);setStats(pokestats[ind])}} className='border-2 border-black scale-100 hover:scale-125 hover:cursor-pointer' src={require(`./images/${team1[pokemon].name}.png`)} />
-            })
-        }
+      <div className='h-24 bg-green-400 w-1/2 mx-4'>
+        <PokemonSlots team={myTeam} height={'24'} width={'full'} setSelectedPokemon={setSelectedPokemon} setInd={setInd} setMoves={setMoves} onClickHandle={true} />
       </div>
+      
     </div>
   )
 }

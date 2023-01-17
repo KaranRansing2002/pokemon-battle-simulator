@@ -231,7 +231,7 @@ function Teambuilder() {
             ></input>
           </div>
           <div>
-            <Link to="/battle">
+            <Link to={`/${undefined ? 'myteam' : '/battle'}`}>
               <Button variant="contained" theme={theme} >
                 Battle
               </Button>
