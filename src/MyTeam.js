@@ -44,6 +44,8 @@ function MyTeam({ userinfo }) {
   useEffect(() => {
     if (selectedTeam != undefined) {
       myTeam = teams[selectedTeam]
+      localStorage.removeItem("myTeam");
+      localStorage.setItem("myteam", JSON.stringify(myTeam));
     }
   },[selectedTeam])
 
