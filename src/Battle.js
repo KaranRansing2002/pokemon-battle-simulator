@@ -84,14 +84,16 @@ function Battle() {
     e.preventDefault();
     await socket.emit("send_message", { message: [user , message],roomid : roomid})
     setMessagesStack((oldarr)=>[...oldarr,[user , message]])
+    console.log("me",messagesStack.length)
     setMessage('');
   }
 
   useEffect(() => {
-    socket.on("receive_message", async(data) => {
-      console.log("data", data, messagesStack);
-      !messagesStack.includes(data) && await setMessagesStack((oldarr) => [...oldarr, data.message]);
-      console.log(messagesStack)
+    console.log("rendered component here")
+    socket.on("receive_message",(data) => {
+      console.log("data", data);
+      setMessagesStack((oldarr) => [...oldarr, data.message]);
+      // console.log(messagesStack)
     })  
     socket.on("opponent_pokemon", (data) => {
       setOpponentPokemon(data.pokemon)
@@ -127,14 +129,15 @@ function Battle() {
     socketCurrHp();
   })
 
-  const handleAttack = async(moveinfo) => {
-    await socket.emit("attack",{moveinfo : moveinfo,attk : pokemoninfo.stats[1],spa : pokemoninfo.stats[3],roomid : roomid})
+  const handleAttack = async (moveinfo) => {
+    console.log(pokemoninfo);
+    await socket.emit("attack",{moveinfo : moveinfo,attk : pokemoninfo.stats[1],spa : pokemoninfo.stats[3],pokemontype : pokemoninfo.type,roomid : roomid})
     // console.log("myteam",myTeam)
   }
 ////////////////////////////////////////socket-end////////////////////////////////////
   
   useEffect(() => {
-    console.log("messagesStack",messagesStack)  
+    if(messagesStack.length>0)console.log("messagesStack",messagesStack)  
   },[messagesStack])
   
   return (
@@ -173,15 +176,15 @@ function Battle() {
       <div className='h-[95%] w-[45%] m-8 bg-[#212121] border-2 border-black flex flex-col items-center'>
         <div className='h-42 w-[98%] m-2 border-black border-2 flex-1'>
           {
-            messagesStack.map((mesobj) => (
-              <div className='m-2 text-white h-auto'><span className={user===mesobj[0] ? 'text-green-400' : 'text-red-600'}>{mesobj[0]}</span>: {mesobj[1]}</div>
+            messagesStack.map((mesobj,index) => (
+              <div key={index} className='m-2 text-white h-auto'><span className={user===mesobj[0] ? 'text-green-400' : 'text-red-600'}>{mesobj[0]}</span>: {mesobj[1]}</div>
             ))
           }
         </div>
         <div className='h-auto w-full'>
           <form className='h-42 w-full flex items-center self-place-end' onSubmit={(e)=>handleMessage(e)}>
             <input placeholder='enter message' value={message} onChange={(e)=>setMessage(e.target.value)} className='border-black border-2 m-2 w-[80%]'></input>
-            <Button variant="outlined" endIcon={<SendIcon />}>
+            <Button onClick={handleMessage} variant="outlined" endIcon={<SendIcon />}>
               Send
             </Button>
           </form>

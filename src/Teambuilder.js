@@ -187,7 +187,7 @@ function Teambuilder() {
     }
     setValidate(ok);
     if(validate){
-      selMoves[teamPokemon[0]]={"name" : teamPokemon[2],"moves" : mmoves,"ability" : choosenAbility,"stats" : teamPokemon.slice(5)}; 
+      selMoves[teamPokemon[0]]={"name" : teamPokemon[2],"moves" : mmoves,"ability" : choosenAbility,"stats" : teamPokemon.slice(5),"type" : teamPokemon[3]}; 
       // selMoves["ability"]=choosenAbility
       alert("Saved successfully")
       // console.log(selMoves)
