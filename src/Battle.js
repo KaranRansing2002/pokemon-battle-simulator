@@ -89,7 +89,7 @@ function Battle() {
   }
 
   useEffect(() => {
-    console.log("rendered component here")
+    console.log("rendered component here",pokemoninfo)
     socket.on("receive_message",(data) => {
       console.log("data", data);
       setMessagesStack((oldarr) => [...oldarr, data.message]);
@@ -102,16 +102,20 @@ function Battle() {
       setOpphp(data.currhp) 
     })
     socket.on("opponent_attack", (data) => {
+      console.log("oppnentattack here", data);
       let arr = [1, 1.5];
       let crit = arr[Math.floor(arr.length * Math.random())];
       const stab = 1.5;
-      console.log("pokemoninfo",pokemoninfo,data)
+      let pokemoninformation = JSON.parse(localStorage.getItem("pokemonInformation"))
+      setCurrHp(pokemoninformation.stats[0]);
       const attack = data.moveinfo.Category === "physical" ? data.attk : data.spa;
-      const defence = data.moveinfo.Category === "physical" ? pokemoninfo.stats[2] : pokemoninfo.stats[4];
+      const defence = data.moveinfo.Category === "physical" ? pokemoninformation.stats[2] : pokemoninformation.stats[4];
       let damage = (0.25 * data.moveinfo.Power * (attack / defence) * crit * stab * currHp) / 100;
       damage = Math.min(damage, currHp);
-      console.log("damage",damage)
+      console.log("damage",currHp)
       setCurrHp((oldhp) => oldhp - damage);
+      pokemoninformation.stats[0] = currHp;
+      localStorage.setItem("pokemoninformation", JSON.stringify(pokemoninformation));
     })
   }, [socket])
 
@@ -130,14 +134,13 @@ function Battle() {
   })
 
   const handleAttack = async (moveinfo) => {
-    console.log(pokemoninfo);
     await socket.emit("attack",{moveinfo : moveinfo,attk : pokemoninfo.stats[1],spa : pokemoninfo.stats[3],pokemontype : pokemoninfo.type,roomid : roomid})
     // console.log("myteam",myTeam)
   }
 ////////////////////////////////////////socket-end////////////////////////////////////
   
   useEffect(() => {
-    if(messagesStack.length>0)console.log("messagesStack",messagesStack)  
+    // if(messagesStack.length>0)console.log("messagesStack",messagesStack)  
   },[messagesStack])
   
   return (
@@ -162,7 +165,7 @@ function Battle() {
                 <div className='h-[95%] border-black border-2 w-1/4 rounded'>
                   <button class="bg-red-200 hover:bg-red-300 active:bg-red-400 text-black font-bold py-2 px-4 h-full w-full" onClick={()=>handleAttack(movestats[move])}>
                     <h3>{move}</h3> 
-                    <h3>{move.length>0 && movestats[move]["PP"] && movestats[move]["PP"]}</h3>
+                    <h3>{move.length>0 && movestats[move]!=undefined &&  movestats[move]["PP"] && movestats[move]["PP"]}</h3>
                   </button>
                 </div>
               ) 
