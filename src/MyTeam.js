@@ -47,7 +47,11 @@ function MyTeam({ userinfo }) {
       localStorage.removeItem("myTeam");
       localStorage.setItem("myteam", JSON.stringify(myTeam));
     }
-  },[selectedTeam])
+  }, [selectedTeam])
+  
+  const handleDelete = () => {
+    
+  }
 
   return (
     <div className='h-full w-full flex flex-col items-center '>
@@ -67,10 +71,14 @@ function MyTeam({ userinfo }) {
           teams.map((team, index) => {
             return <div className='h-auto m-4 flex '>
               {teams.length>0 && <PokemonSlots team={teams[index]} colors={"bg-purple-400"} />}
-              <div className='h-full flex items-center mx-4'>
-                {
-                  selectedTeam == index ? <Button variant='contained' theme={theme} color="primary" onClick={() => setSelectedTeam(index)}>Selected</Button> : <Button variant='contained' theme={theme} color="secondary" onClick={() => setSelectedTeam(index)}>Select</Button>
-                }
+              <div className='h-full justify-center mx-4 w-1/2 '>
+                <div className='w-full h-full flex items-center'>
+                  {
+                    <div className='mx-4'>{selectedTeam == index ? <Button variant='contained' theme={theme} color="primary" onClick={() => setSelectedTeam(index)}>Selected</Button> : <Button variant='contained' theme={theme} color="secondary" onClick={() => setSelectedTeam(index)}>Select</Button>}</div>
+                  }
+                  <div className='mx-4'><Button variant='contained'>Edit</Button></div>
+                  <div className='mx-4'><Button variant='contained' onClick={handleDelete}>Delete</Button></div>
+                </div>
               </div>
             </div>
           })

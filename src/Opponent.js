@@ -10,9 +10,9 @@ function Opponent(props) {
                     <div className={`w-[${opphp}%] h-full bg-green-400 rounded-lg hpbar`}>
                     </div>
                 </div>
-                <span className='text-sm h-[15px] border-black border flex items-center rounded bg-slate-400'>{100}%</span>
+                <span className='text-sm h-[15px] border-black border flex items-center rounded bg-slate-400'>{Math.ceil(opphp)}%</span>
             </div>
-        <img className={`${classp}`} src={`https://play.pokemonshowdown.com/sprites/ani/${opponentPokemon}.gif`}></img>
+        <img className={`${classp}`} src={`https://play.pokemonshowdown.com/sprites/ani/${opponentPokemon=='deoxys-normal' ? 'deoxys' : opponentPokemon}.gif`}></img>
     </div>
   )
 }

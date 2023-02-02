@@ -1,7 +1,7 @@
 import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 import React from 'react'
 
-function PokemonSlots(props) {
+function  PokemonSlots(props) {
   const team = props.team
   delete team["email"]
   let arr = Object.keys(team);
@@ -17,7 +17,7 @@ function PokemonSlots(props) {
             return (
               <Tooltip key={index} title={`${team[id].name} 
                 ${team[id].stats.map((st,index) => (stats[index]+"="+st))}`}>
-                <div key={index} className={`h-[94%] w-1/6 border-black border bg-green-200 m-1 hover:scale-[1.11]`} onClick={onClickHandle != undefined && (() => { setSelectedPokemon(team[id].name); setInd(index); setMoves(team[id].moves); setPokemoninfo(team[id]); localStorage.setItem("pokemonInformation",JSON.stringify(team[id])) ; console.log("teamid",team[id])})}>
+                <div key={index} className={`h-[94%] w-1/6 border-black border bg-green-200 m-1 hover:scale-[1.11]`} onClick={onClickHandle != undefined && (() => { setSelectedPokemon(team[id].name); setInd(index); setMoves(team[id].moves); setPokemoninfo(team[id]); localStorage.setItem("pokemonInformation", JSON.stringify(team[id])); })}>
                     <img className={`h-auto w-[80%]  object-cover	`} src={require(`./images/${team[id].name}.png`)}></img>
                 </div></Tooltip>
             )
