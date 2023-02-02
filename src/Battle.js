@@ -49,6 +49,7 @@ function Battle() {
   const [moves, setMoves] = useState([])
   const [roomid, setRoomId] = useState('123')
   const [oppAttkData, setOppAttkData] = useState(undefined);
+  const [turn, setTurn] = useState(1);
     
   useEffect(() => { 
     Object.keys(team1).map(id => {
@@ -148,6 +149,7 @@ function Battle() {
         
         {/* game window */}
         <div className={`flex flex-col h-3/5 m-4 w-full border-4 border-black rounded-lg bg-[url(${imgadd})] bg-cover bg-no-repeat`}>
+          <span className='border border-black text-black bg-white w-14 text-center m-2'>Turn {turn }</span>
           <div className='h-1/2 w-1/2 self-end flex'>
             {opponentPokemon && <Opponent opphp={opphp} classp={classOpp} opponentPokemon={opponentPokemon} />}
           </div>

@@ -2,17 +2,11 @@ import React, { useEffect, useState } from 'react'
 import Button from '@mui/material/Button';
 import Pokedex from './Pokedex';
 import Stats from './Stats';
-import charmander from './images/charmander.png'
 import Data, {types} from './Data'
 import axios from 'axios';
-import mew from './images/mew.png'
-import { rows } from './Data.js'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
-import TextField from '@mui/material/TextField';
-import moves from './movesdb';
 import MoveTable from './MoveTable';
 import { createTheme } from "@mui/material/styles";
-import { purple, red, green } from "@mui/material/colors";
 import { Link } from "react-router-dom";
 
 const theme = createTheme({
@@ -64,93 +58,11 @@ function Teambuilder() {
   const [choosenAbility,setChoosenAbility] = useState('')
   const [validate,setValidate] = useState(false)
 
-  // useEffect(() => {
-  //   const url1 = "https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0";
-  //   axios.get(url1).then((resp) => {
-  //     setPokemons(resp.data.results);
-  //   });
-  // }, []);
-  // console.log("teamPokemon", teamPokemon[2])
-  useEffect(() => {
-    
-    // const urls = [];
-    // if(pokemons.length>0){
-    //   for (let i = 896; i < 897;i++) {
-    //     // console.log(pokemons[i], i)
-    //     urls.push(pokemons[i].url)
-    //   }
-    //   axios.all(urls.map((url) => axios.get(url))).then((res) => {
-    //     // console.log("res", res)
-    //     for (let i = 0; i < res.length; i++){
-    //       const data = res[i].data;
-    //       let obj = {}
-    //       obj["id"] = i+896;
-    //       const rPath = `./images/${data.name.toLowerCase()}.png`;
-    //       obj["imageUrl"] = tryRequire(rPath)[1];
-    //       obj["name"] = data.name;
-    //       let arr = [];
-    //       for (let x of data["types"]) {
-    //         arr.push(x.type.name)
-    //       }
-    //       obj["types"] = arr;
-    //       arr = [];
-    //       for (let x of data["abilities"]) {
-    //         arr.push(x.ability.name)
-    //       }
-    //       obj["abilities"] = arr;
-    //       arr = [];
-    //       let sum = 0;
-    //       for (let x of data['stats']) {
-    //         arr.push(x.base_stat);
-    //         sum += x.base_stat;
-    //       }
-    //       arr.push(sum);
-    //       obj["stats"] = arr;
-    //       console.log(obj);
-    //       axios.post('http://localhost:8000/pokemon/add', obj).then((resp) => console.log("data added ", obj.name, i));
-    //     }
-    //   })
-    // }   
-  },[pokemons])
 
   const handleDelete=(index)=>{
     setSelectedPokemon(selectedPokemon.filter((pok,ind) => index!=ind))
     setTeamPokemon('')
   }
-
-  // useEffect(()=>{
-  //   for(let i=0;i<moves.length;i++){
-  //     let move={};
-  //     move["Id"]=i;
-  //     let ok=true;
-  //     for(let x of Object.keys(moves[i])){
-  //       if(x=="Name_URL" || x=="TM" || x=="Type_URL" ){
-  //         continue;
-  //       }
-  //       if((x=="Effect" && moves[i][x].includes("Z-Move")) || (moves[i]["Name"].includes("G-Max")) || (moves[i]["Name"].includes("Max"))){
-  //         ok=false;
-  //         break;
-  //       }
-  //       move[x]=moves[i][x];
-  //     }
-  //     if(!ok){
-  //       continue; 
-  //     }
-  //     move["Pokemon"]=[]
-  //     move['Name']=move['Name'].toLowerCase().replaceAll(" ","-");
-  //     if(move["Accuracy"]=='—'){
-  //       move["Accuracy"] = "∞"
-  //     }
-  //     axios.get(`https://pokeapi.co/api/v2/move/${move["Name"]}`).then((resp)=>{
-  //       if(resp.status==200){
-  //         const data = resp.data["learned_by_pokemon"];
-  //         move["Pokemon"] = data.map((dat) => dat.name);
-  //         // console.log("data",move["Pokemon"]);
-  //         axios.post('http://localhost:8000/moves/',move).then(resp=>console.log("data added.",move.Name))
-  //       }
-  //     })
-  //   }
-  // },[])
 
   useEffect(()=>{
     // console.log("here",teamPokemon[0]);
@@ -166,8 +78,8 @@ function Teambuilder() {
       setMove3('');
       setMove4('');
     }
-  },[teamPokemon])
-
+  }, [teamPokemon])
+  
   const handleSave=()=>{
     const mmoves = [move1,move2,move3,move4]
     

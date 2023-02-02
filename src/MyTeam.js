@@ -3,8 +3,10 @@ import React, { useEffect, useState } from 'react'
 import PokemonSlots from './PokemonSlots'
 import Button from '@mui/material/Button';
 import { createTheme } from "@mui/material/styles";
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
+import EditIcon from './Icons/EditIcon';
+import DeleteIcon from './Icons/DeleteIcon';
+import Tooltip, { tooltipClasses } from '@mui/material/Tooltip';
 
 const theme = createTheme({
   palette: {
@@ -26,6 +28,7 @@ const theme = createTheme({
 let myTeam=undefined;
 
 function MyTeam({ userinfo }) {
+  const navigate = useNavigate();
   const [selectedTeam, setSelectedTeam] = useState(undefined)
   const [teams, setTeams] = useState([]) 
   useEffect(() => {
@@ -36,7 +39,7 @@ function MyTeam({ userinfo }) {
       teams.map(team => {
         let arr = Object.keys(team);
         arr=arr.slice(0,arr.length-1)
-        arr.map(obj=>console.log(team[obj]))
+        // arr.map(obj=>console.log(team[obj]))
       })
     })
   }, [])
@@ -48,9 +51,13 @@ function MyTeam({ userinfo }) {
       localStorage.setItem("myteam", JSON.stringify(myTeam));
     }
   }, [selectedTeam])
-  
-  const handleDelete = () => {
-    
+
+  const handleDelete = (index) => {
+    const newTeam = teams.filter((team, ind) => ind !== index);
+    setTeams(newTeam);
+    axios.patch('http://localhost:8000/user/team', { team: newTeam,email : userinfo.email }, { withCredentials: true }).then((resp) => {
+      alert(resp.data.message);
+    })
   }
 
   return (
@@ -65,24 +72,31 @@ function MyTeam({ userinfo }) {
                 Battle
               </Button>
           </Link>}
-          Your Teams
-        {
-          teams && teams.length > 0 &&
-          teams.map((team, index) => {
-            return <div className='h-auto m-4 flex '>
-              {teams.length>0 && <PokemonSlots team={teams[index]} colors={"bg-purple-400"} />}
-              <div className='h-full justify-center mx-4 w-1/2 '>
-                <div className='w-full h-full flex items-center'>
-                  {
-                    <div className='mx-4'>{selectedTeam == index ? <Button variant='contained' theme={theme} color="primary" onClick={() => setSelectedTeam(index)}>Selected</Button> : <Button variant='contained' theme={theme} color="secondary" onClick={() => setSelectedTeam(index)}>Select</Button>}</div>
-                  }
-                  <div className='mx-4'><Button variant='contained'>Edit</Button></div>
-                  <div className='mx-4'><Button variant='contained' onClick={handleDelete}>Delete</Button></div>
+        Your Teams
+      <div className='w-full h-full flex'>
+        <div className='w-[60%]'>
+          {
+            teams && teams.length > 0 &&
+            teams.map((team, index) => {
+              return <div className='h-auto m-4 flex w-full'>
+                {teams.length > 0 && <PokemonSlots team={teams[index]} colors={"bg-purple-400"} width={100} />}
+                <div className='h-full flex items-center mx-4 '>
+                  <div className='w-full h-auto '>
+                      <div className='mx-4'>{selectedTeam == index ? <Button variant='contained' theme={theme} color="primary" onClick={() => setSelectedTeam(index)}>Selected</Button> : <Button variant='contained' theme={theme} color="secondary" onClick={() => setSelectedTeam(index)}>Select</Button>}</div>
+                      <div className='m-4 flex justify-center gap-2'>
+                        <Tooltip title='edit'><button><EditIcon /></button></Tooltip>
+                        <Tooltip title='delete'><button onClick={()=>handleDelete(index)}><DeleteIcon /></button></Tooltip>
+                      </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          })
-        }
+            })
+          }
+        </div>
+        <div className='w-[40%] h-[75%] bg-green-400 mr-6'>
+
+        </div>
+      </div>
     </div>
   )
 }
