@@ -7,7 +7,7 @@ import axios from 'axios';
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import MoveTable from './MoveTable';
 import { createTheme } from "@mui/material/styles";
-import { Link } from "react-router-dom";
+import { Link ,useNavigate} from "react-router-dom";
 import baseUrl from './url';
 
 const theme = createTheme({
@@ -59,6 +59,7 @@ function Teambuilder() {
   const [choosenAbility,setChoosenAbility] = useState('')
   const [validate,setValidate] = useState(false)
 
+  const navigate = useNavigate();
 
   const handleDelete=(index)=>{
     setSelectedPokemon(selectedPokemon.filter((pok,ind) => index!==ind))
@@ -99,7 +100,7 @@ function Teambuilder() {
       alert("please select ability")
     }
     setValidate(ok);
-    if(validate){
+    if(ok){
       selMoves[teamPokemon[0]]={"name" : teamPokemon[2],"moves" : mmoves,"ability" : choosenAbility,"stats" : teamPokemon.slice(5),"type" : teamPokemon[3]}; 
       // selMoves["ability"]=choosenAbility
       alert("Saved successfully")
@@ -116,6 +117,8 @@ function Teambuilder() {
     resp = resp.data; 
     console.log("resp",resp)
     alert(resp.message);
+    selMoves = {};
+    navigate('/myteam');
   }
 
 

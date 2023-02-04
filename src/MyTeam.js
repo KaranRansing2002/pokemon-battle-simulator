@@ -95,9 +95,9 @@ function MyTeam({ userinfo }) {
             })
           }
         </div>
-        <div className='w-[40%] h-[75%] bg-green-400 mr-6'>
+        {/* <div className='w-[40%] h-[75%] bg-green-400 mr-6'>
 
-        </div>
+        </div> */}
       </div>
     </div>
   )
