@@ -17,7 +17,7 @@ function Player1(props) {
                     </div>
                     <span className='text-sm h-[15px] border-black border flex items-center rounded bg-slate-400'>{Math.ceil(currhp/thp*100)}%</span>
                 </div>
-                <img className={`${classp} max-h-36 mb-4 object-contain `} src={`https://play.pokemonshowdown.com/sprites/ani-back/${selectedPokemon=='deoxys-normal' ? 'deoxys' : selectedPokemon}.gif`}></img>
+                <img className={`${classp} max-h-36 mb-4 object-contain `} src={`https://play.pokemonshowdown.com/sprites/ani-back/${selectedPokemon==='deoxys-normal' ? 'deoxys' : selectedPokemon}.gif`}></img>
             </div>
         </div>
     )

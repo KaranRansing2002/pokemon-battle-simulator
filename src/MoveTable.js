@@ -10,11 +10,11 @@ import TablePagination from "@mui/material/TablePagination";
 import { colMoves } from "./Data";
 import axios from "axios";
 import { types } from "./Data";
+import baseUrl from "./url";
 
 function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
-
 
 let rows=[]
 
@@ -28,16 +28,16 @@ function MoveTable(props) {
 
     function filterRows(rarr,arr,ind){
       console.log("rarr",arr,rarr.filter((r)=>(!arr.includes(r.Name))))
-      return rarr.filter((r)=>(!arr.filter((x,index)=>ind!=index).includes(r.Name.toLowerCase())))
+      return rarr.filter((r)=>(!arr.filter((x,index)=>ind!==index).includes(r.Name.toLowerCase())))
     }
 
     useEffect(()=>{
-      if(vari[currInput].length==0){
+      if(vari[currInput].length===0){
         setMrows([...rows])
       }
       if(vari[currInput].length>0 && rows.length>0){
         console.log("currinp",vari)
-        if(mrows.length>0 && vari[currInput]!=''){
+        if(mrows.length>0 && vari[currInput]!==''){
           setMrows(filterRows(rows,vari,currInput).filter((row)=>{
             return(
               row["Name"].toLowerCase().includes(vari[currInput]) 
@@ -48,7 +48,7 @@ function MoveTable(props) {
     },[vari[currInput],trigger])
 
     useEffect(() => {
-      axios.get(`http://localhost:8000/moves/all`).then((resp) => {
+      axios.get(`${baseUrl}/moves/all`).then((resp) => {
         // console.log(teamPokemon[2])
         const data = resp.data.filter((res)=>res.Pokemon.includes(teamPokemon[2]));
         for(let i=0;i<data.length;i++){

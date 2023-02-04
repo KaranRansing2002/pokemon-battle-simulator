@@ -11,13 +11,13 @@ function  PokemonSlots(props) {
   const stats = ["hp", "atk", "def", "spa", "spd", "spe", "bst"]
     
     return (
-        <div className={`h-${height==undefined ? 'auto' : height} w-${width!=undefined ? width : '[55%]'} ${props.colors} border-black border-2 flex justify-center items-center`} >
+        <div className={`h-${height===undefined ? 'auto' : height} w-${width!==undefined ? width : '[55%]'} ${props.colors} border-black border-2 flex justify-center items-center`} >
       {
         arr.map((id,index)=>{
             return (
               <Tooltip key={index} title={`${team[id].name} 
                 ${team[id].stats.map((st,index) => (stats[index]+"="+st))}`}>
-                <div key={index} className={`h-[94%] w-1/6 border-black border bg-green-200 m-1 hover:scale-[1.11]`} onClick={onClickHandle != undefined && (() => { setSelectedPokemon(team[id].name); setInd(index); setMoves(team[id].moves); setPokemoninfo(team[id]); localStorage.setItem("pokemonInformation", JSON.stringify(team[id])); })}>
+                <div key={index} className={`h-[94%] w-1/6 border-black border bg-green-200 m-1 hover:scale-[1.11]`} onClick={onClickHandle !== undefined && (() => { setSelectedPokemon(team[id].name); setInd(index); setMoves(team[id].moves); setPokemoninfo(team[id]); localStorage.setItem("pokemonInformation", JSON.stringify(team[id])); })}>
                     <img className={`h-auto w-[80%]  object-cover	`} src={require(`./images/${team[id].name}.png`)}></img>
                 </div></Tooltip>
             )

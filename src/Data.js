@@ -1,8 +1,8 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import baseUrl from "./url";
 
 const tableArr = ["name", "types", "abilities"];
-const baseUrl = "http://localhost:8000/pokemon/";
 
 // const stats = ['hp', "Atk", "Def", "Spa", "Spd", "Spe", "Bst"]
 
@@ -26,7 +26,7 @@ function Data(props) {
     // if (rows.length > 0) return;
     rows = [];
     axios
-      .get(`http://localhost:8000/pokemon/all`)
+      .get(`${baseUrl}/pokemon/all`)
       .then((resp) => {
         resp.data.sort(compare);
         // console.log(data['types'],data["id"])

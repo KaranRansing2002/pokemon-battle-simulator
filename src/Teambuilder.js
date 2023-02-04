@@ -8,6 +8,7 @@ import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import MoveTable from './MoveTable';
 import { createTheme } from "@mui/material/styles";
 import { Link } from "react-router-dom";
+import baseUrl from './url';
 
 const theme = createTheme({
   palette: {
@@ -26,7 +27,7 @@ const theme = createTheme({
   },
 });
 
-const baseUrl='http://localhost:8000'
+// const baseUrl='https://pokemonbackend.onrender.com'
 
 const tryRequire = (path) => {
   try {
@@ -60,7 +61,7 @@ function Teambuilder() {
 
 
   const handleDelete=(index)=>{
-    setSelectedPokemon(selectedPokemon.filter((pok,ind) => index!=ind))
+    setSelectedPokemon(selectedPokemon.filter((pok,ind) => index!==ind))
     setTeamPokemon('')
   }
 
@@ -85,7 +86,7 @@ function Teambuilder() {
     
     let ok=false;
     mmoves.map((mv,ind)=>{
-      if(mv!=''){
+      if(mv!==''){
         ok = true;
         return;
       }
@@ -93,7 +94,7 @@ function Teambuilder() {
     if(!ok){
       alert("please select atleast one move")
     }
-    ok = ok & choosenAbility!=''
+    ok = ok & choosenAbility!==''
     if(!ok){
       alert("please select ability")
     }
@@ -108,7 +109,7 @@ function Teambuilder() {
 
   const handleSaveTeam = async () => {
     console.log("handlesaveteam",selMoves)
-    let resp = await axios.post(`http://localhost:8000/user/team`, selMoves,{
+    let resp = await axios.post(`${baseUrl}/user/team`, selMoves,{
       withCredentials: true
     });
     console.log("selmoves=",selMoves)

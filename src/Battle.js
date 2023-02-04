@@ -13,15 +13,15 @@ import SendIcon from '@mui/icons-material/Send';
 import uuid from 'react-uuid';
 import Chat from './Chat';
 
+import baseUrl from './url';
 
-const socket= io.connect("http://localhost:8000")
+const socket= io.connect(baseUrl)
 
 const imgadd=bgs[Math.floor(Math.random()*bgs.length)];
 
 let pokemonhp = [] 
 let pokestats = []
 let movestats={}
-const baseUrl = 'http://localhost:8000'
 let pokemoninformation = undefined;
 let thp = 0;
 let pp=[]
@@ -33,8 +33,8 @@ let cnt = 0;
 function Battle() {
   // delete myTeam["email"]
   const myTeam = JSON.parse(localStorage.getItem('myteam'));
-  const team1 = myTeam == undefined ? selMoves : myTeam;
-  const team2 = myTeam == undefined ? selMoves : myTeam;
+  const team1 = myTeam === undefined ? selMoves : myTeam;
+  const team2 = myTeam === undefined ? selMoves : myTeam;
   // console.log(team1,selMoves);
   const [classp,setClassp] = useState('')
   const [selectedPokemon,setSelectedPokemon] = useState('')
@@ -56,7 +56,7 @@ function Battle() {
       pokemonhp.push([team1[id].name,team1[id].stats[0],team1[id].stats[0]]) 
     })
     let arr = [];
-    Object.keys(team1).map(id => team1[id].moves.map(move=>move !="" && arr.push(move)));
+    Object.keys(team1).map(id => team1[id].moves.map(move=>move !=="" && arr.push(move)));
     // console.log(arr)
     axios.all(arr.map(move => axios.get(`${baseUrl}/moves/${move}`))).then((resp) => {
       resp.map(res => {
@@ -93,12 +93,12 @@ function Battle() {
   }, [selectedPokemon])
   
   useEffect(() => {
-    if (oppAttkData != undefined) {
+    if (oppAttkData !== undefined) {
       let data = oppAttkData;
       console.log("opp data", oppAttkData)
       let prob = [];
       let Accuracy = data.moveinfo.Accuracy;
-      Accuracy = Accuracy == '∞' ? 100 : parseInt(Accuracy);
+      Accuracy = Accuracy === '∞' ? 100 : parseInt(Accuracy);
       for (let i = 1; i <= 100; i++){
         if (i <= Accuracy) prob.push(1);
         else prob.push(0);
@@ -108,7 +108,7 @@ function Battle() {
       let crit = arr[Math.floor(arr.length * Math.random())];
       const stab = 1.5;
       
-      let power = data.moveinfo.Power == '—' ? 0 : parseInt(data.moveinfo.Power);
+      let power = data.moveinfo.Power === '—' ? 0 : parseInt(data.moveinfo.Power);
       const attack = data.moveinfo.Category === "physical" ? data.attk : data.spa;
       const defence = data.moveinfo.Category === "physical" ? pokemoninformation.stats[2] : pokemoninformation.stats[4];
       let damage = (0.25 * power * (attack / defence) * crit * stab * thp * probability) / 100;
@@ -166,7 +166,7 @@ function Battle() {
                 <div className='h-[95%] border-black border-2 w-1/4 rounded'>
                   <button class="bg-red-200 hover:bg-red-300 active:bg-red-400 text-black font-bold py-2 px-4 h-full w-full" onClick={()=>handleAttack(movestats[move])}>
                     <h3>{move}</h3> 
-                    <h3>{move.length>0 && movestats[move]!=undefined &&  movestats[move]["PP"] && movestats[move]["PP"]}</h3>
+                    <h3>{move.length>0 && movestats[move]!==undefined &&  movestats[move]["PP"] && movestats[move]["PP"]}</h3>
                   </button>
                 </div>
               ) 

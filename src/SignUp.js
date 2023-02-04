@@ -14,6 +14,9 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import baseUrl from './url';
+
+// const baseUrl = 'https://pokemonbackend.onrender.com';
 
 function Copyright(props) {
   return (
@@ -43,7 +46,7 @@ export default function SignUp() {
       password: data.get('password'),
       confirmpassword : data.get('confirmpassword')
     }
-    let resp = await axios.post('http://localhost:8000/user/signup', obj); 
+    let resp = await axios.post(`${baseUrl}/user/signup`, obj); 
     resp = resp.data;
     console.log(resp);
     if (resp.successfull) {

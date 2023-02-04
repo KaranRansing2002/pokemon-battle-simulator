@@ -58,7 +58,7 @@ function Pokedex(props) {
                             // console.log(row[358])
                             const name=rows[ind][2];
                             return(
-                                ind<num && <TableRow key = {ind} onClick={()=>sPokemon((oldArr)=>oldArr.length<6 ? [...oldArr,[uuid(),...row.filter((pk,ind)=>ind!=0)]] : oldArr)}>
+                                ind<num && <TableRow key = {ind} onClick={()=>sPokemon((oldArr)=>oldArr.length<6 ? [...oldArr,[uuid(),...row.filter((pk,ind)=>ind!==0)]] : oldArr)}>
                                     {
                                         columns.map((column,index) => (
                                         <TableCell
@@ -67,7 +67,7 @@ function Pokedex(props) {
                                         style={{ minWidth: column.minWidth }}
                                         >
                                         {
-                                            index==1 ? <img className='h-8 scale-[1.5]' src={require(`./images/${name}.png`)}></img> : rows[ind][index]
+                                            index===1 ? <img className='h-8 scale-[1.5]' src={require(`./images/${name}.png`)}></img> : rows[ind][index]
                                         }
                                         </TableCell>
                                         ))

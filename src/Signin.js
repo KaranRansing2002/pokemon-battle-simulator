@@ -13,7 +13,8 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import axios from 'axios'
-import { Navigate,useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import baseUrl from './url';
 
 function Copyright(props) {
   return (
@@ -45,7 +46,7 @@ export default function Signin(props) {
     }
     let resp;
     try {
-      resp = await axios.post('http://localhost:8000/user/signin', obj, {
+      resp = await axios.post(`${baseUrl}/user/signin`, obj, {
         withCredentials : true
       })
     } catch (error) {
