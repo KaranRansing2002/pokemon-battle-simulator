@@ -29,7 +29,7 @@ function Navbar({userinfo,setUserinfo,setToggle}) {
         {userinfo != undefined && <img className = 'hidden h-16 md:block' src={require('./images/rayquaza.png')} />}
         <h2 className='text-slate-400'>{ userinfo?.username }</h2>
         {
-          userinfo != undefined ? <Button id='idr' onClick={() => { setUserinfo(undefined); localStorage.clear(); axios.get(`${baseUrl}/user/signout`, { withCredentials: true }).then((resp) => alert(resp.data.message)); navigate('/signin')}}>Sign-Out</Button> : <Button onClick={()=>navigate('/signin')}>Signin</Button>
+          userinfo != undefined ? <Button id='idr' onClick={() => { setUserinfo(undefined); localStorage.clear(); axios.get(`${baseUrl}/user/signout`, { withCredentials: true }).then((resp) => alert(resp.data.message)); navigate('/signin')}}>Sign-Out</Button> : <Button id='idr' onClick={()=>navigate('/signin')}>Signin</Button>
         }
       </div>
     </div>
