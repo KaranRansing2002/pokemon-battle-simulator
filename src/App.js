@@ -11,17 +11,20 @@ import DamageCalculator from './DamageCalculator';
 import Signin from './Signin';
 import SignUp from './SignUp';
 import MyTeam from './MyTeam';
+import Sidebar from './components/Sidebar';
 
 function App() {
   // console.log(localStorage.getItem("name").username)
   // console.log(localStorage)
   const obj = JSON.parse(localStorage.getItem('userinfo'));
   // console.log("obj", obj);
-  const [userinfo,setUserinfo] = useState(obj)
+  const [userinfo, setUserinfo] = useState(() => obj)
+  const [toggle, setToggle] = useState(false);
   return (
     <div className="App h-full">
       <Router> 
-        <Navbar userinfo={userinfo} setUserinfo={setUserinfo} />
+        <Navbar userinfo={userinfo} setUserinfo={setUserinfo} setToggle={setToggle} />
+        <Sidebar toggle={toggle} />
         <Routes>
             <Route path='/' exact element={<Home/>}/>
             <Route path='/teambuilder' exact element={<Teambuilder/>}/>
@@ -29,7 +32,7 @@ function App() {
             <Route path='/damagecalculator' exact element={<DamageCalculator />} />
             <Route path='/signin' exact element={<Signin setUserinfo={setUserinfo} />} />
             <Route path='/signup' exact element={<SignUp />} />
-            <Route path='/myteam' exact element={<MyTeam userinfo={userinfo} />} />
+            <Route path='/myteams' exact element={<MyTeam userinfo={userinfo} />} />
         </Routes>
       </Router>
     </div>

@@ -1,4 +1,5 @@
 {
+  "homepage": "https://KaranRansing2002.github.io/pokemon-battle-simulator/",
   "name": "pokemon-game",
   "version": "0.1.0",
   "private": true,
@@ -15,6 +16,7 @@
     "cors": "^2.8.5",
     "fs": "^0.0.1-security",
     "fs-react": "^0.0.4",
+    "hamburger-react": "^2.5.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0",
@@ -26,6 +28,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -48,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^5.0.0"
   }
 }

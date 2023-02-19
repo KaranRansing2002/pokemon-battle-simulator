@@ -67,7 +67,7 @@ function Pokedex(props) {
                                         style={{ minWidth: column.minWidth }}
                                         >
                                         {
-                                            index===1 ? <img className='h-8 scale-[1.5]' src={require(`./images/${name}.png`)}></img> : rows[ind][index]
+                                            index===1 ? <img className='h-8 scale-[1.5]' loading='lazy' src={require(`./images/${name}.png`)}></img> : rows[ind][index]
                                         }
                                         </TableCell>
                                         ))
