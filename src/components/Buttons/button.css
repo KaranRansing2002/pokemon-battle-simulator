@@ -76,6 +76,7 @@
     transform: translate(-50%,-50%);
     color: white;
     transition: all 2s ease;
+    color: rgb(111, 112, 114);
    }
    
    #idp:hover span {

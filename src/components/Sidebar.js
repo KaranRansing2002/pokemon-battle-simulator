@@ -15,23 +15,23 @@ function Sidebar({isTeamSelected,toggle}) {
       {
         toggle && 
         <div className='h-full w-full flex flex-col items-center'>
-            <div className='p-8 hover:bg-slate-600 w-full text-center'>
+            <div className='p-8 hover:bg-gray-800 w-full text-center'>
               <Link to="/"><h1 className='text-slate-400 hover:text-slate-100'>Home</h1></Link>
             </div>
-            <div className='p-8 hover:bg-slate-600 w-full text-center'>
+            <div className='p-8 hover:bg-gray-800 w-full text-center'>
               <Link to="/teambuilder">
                 <Button id='idt'>
                   Teambuilder
                 </Button>
               </Link>
             </div>
-            <div className='p-8 hover:bg-slate-600 w-full text-center'>
+            <div className='p-8 hover:bg-gray-800 w-full text-center'>
               <button onClick={()=>navigate('/teambuilder')} data-text="Awesome" className="button">
                   <span className="actual-text">&nbsp;Explore&nbsp;</span>
                   <span className="hover-text" aria-hidden="true">&nbsp;Explore.&nbsp;</span>
               </button>
             </div>
-            <div className='p-8 hover:bg-slate-600 w-full text-center '>
+            <div className='p-8 hover:bg-gray-800 w-full text-center '>
               <button id='idp' onClick={()=>navigate('/battle')}>
                 <span className='text-slate-400'>PLAY NOW</span>
               </button>
