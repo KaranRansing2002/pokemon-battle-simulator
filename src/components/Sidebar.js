@@ -16,7 +16,7 @@ function Sidebar({isTeamSelected,toggle}) {
         toggle && 
         <div className='h-full w-full flex flex-col items-center'>
             <div className='p-8 hover:bg-slate-600 w-full text-center'>
-              <h1 className='text-slate-400 hover:text-slate-100'>Home</h1>
+              <Link to="/"><h1 className='text-slate-400 hover:text-slate-100'>Home</h1></Link>
             </div>
             <div className='p-8 hover:bg-slate-600 w-full text-center'>
               <Link to="/teambuilder">
