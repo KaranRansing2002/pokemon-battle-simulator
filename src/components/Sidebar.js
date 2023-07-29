@@ -11,10 +11,10 @@ function Sidebar({isTeamSelected,toggle}) {
   const navigate = useNavigate();
 
   return ( 
-    <div className={`bg-[#202225] h-[89%] absolute w-[${toggle ? '350px' : '0px'}] z-50 transition-width duration-200 ease-linear `} >
+    <div className={`bg-[#202225] absolute  w-[${toggle ? '350px' : '0px'}] z-50  transition-width duration-200 ease-linear `} >
       {
         toggle && 
-        <div className='h-full w-full flex flex-col items-center'>
+        <div className='w-full flex flex-col items-center'>
             <div className='p-8 hover:bg-gray-800 w-full text-center'>
               <Link to="/"><h1 className='text-slate-400 hover:text-slate-100'>Home</h1></Link>
             </div>

@@ -15,7 +15,7 @@ function Home() {
   const navigate = useNavigate();
 
   return (
-    <div className="h-[89.9%] md:bg-slate-800 bg-cover bg-no-repeat bg-[url('https://media.giphy.com/media/cNlhpWYx5PGsOGXAil/giphy.gif')]">
+    <div className="flex  grow md:bg-slate-800 bg-cover bg-no-repeat bg-[url('https://media.giphy.com/media/cNlhpWYx5PGsOGXAil/giphy.gif')]">
       <div className='h-full w-full flex items-center  overflow-hidden'>
         <div className='mx-24 flex-[0.9] '>
           <div className='text-4xl text-slate-400 w-full my-2 mb-16 '>Welcome to Pokemon Showdown </div>

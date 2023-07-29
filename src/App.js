@@ -21,10 +21,12 @@ function App() {
   const [userinfo, setUserinfo] = useState(() => obj)
   const [toggle, setToggle] = useState(false);
   return (
-    <div className="App h-full">
+    <div className="App h-full flex flex-col bg-cover bg-no-repeat bg-[url('https://media.giphy.com/media/cNlhpWYx5PGsOGXAil/giphy.gif')]  ">
       <Router> 
-        <Navbar userinfo={userinfo} setUserinfo={setUserinfo} setToggle={setToggle} />
-        <Sidebar toggle={toggle} />
+        <div className=''>
+          <Navbar userinfo={userinfo} setUserinfo={setUserinfo} setToggle={setToggle} />
+          <Sidebar toggle={toggle} />
+        </div>
         <Routes>
             <Route path='/' exact element={<Home/>}/>
             <Route path='/teambuilder' exact element={<Teambuilder/>}/>

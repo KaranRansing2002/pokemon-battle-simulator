@@ -15,7 +15,7 @@ function Navbar({userinfo,setUserinfo,setToggle}) {
   const isTeamSelected = localStorage.getItem('myteam') != undefined;
   
   return (
-    <div className='h-16 bg-[#202225] flex items-center'>
+    <div className='h-16 bg-transparent flex items-center '>
       <Hamburger color='white' onToggle={()=>setToggle(value => !value)}/>
       <div className='md:flex-[0.3] flex-1 pl-6'><Link to='/'><img className='p-2' src={logo}></img></Link></div>
       <div className='sm:flex sm:flex-[0.6] sm:items-center sm:justify-center sm:gap-8 hidden '>
