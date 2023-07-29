@@ -79,7 +79,7 @@ function Battle() {
       if (pokemonhp.length > 0) setCurrHp(pokemonhp[ind][1])
       console.log("pokemonhp", pokemonhp[ind][1])
       thp = pokemonhp[ind][2];
-      // console.log(moves)
+      console.log(moves)
     }
   }, [ind,selectedPokemon])
   
