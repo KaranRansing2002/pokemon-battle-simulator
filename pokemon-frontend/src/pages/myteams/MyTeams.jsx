@@ -16,6 +16,7 @@ import { userContext } from '../../App';
 const fetcher = async (...args) => {
     const resp = await axios.get(...args, { withCredentials: true });
     if (!resp.data.data || resp.data.data === undefined) throw new Error("No teams found! please build your team first !")
+    
     return resp.data.data;
 };
 

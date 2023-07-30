@@ -22,7 +22,7 @@ function Team({ selectedPokemons }) {
                             selectedPokemons.map((pokemon, ind) => (
                                 <Tooltip title={pokemon.name} key={ind}>
                                     <div className='bg-[#343434] hover:border hover:border-black cursor-pointer' onClick={() => { setSelectedPokemon(pokemon); }}>
-                                        <img src={`https://raw.githubusercontent.com/KaranRansing2002/pokemon-battle-simulator/main/src/images/${pokemon.name}.png`} />
+                                        <img src={`https://raw.githubusercontent.com/KaranRansing2002/pokemon-battle-simulator/old_version/src/images/${pokemon.name}.png`} />
                                     </div>
                                 </Tooltip>
                             ))

@@ -54,7 +54,7 @@ const fetcher = async (...args) => {
   let data = []
   for (let i = 0; i < resp.data.length; i++) {
     let x = resp.data[i]
-    let pokemon = { id: x.id, image: `https://raw.githubusercontent.com/KaranRansing2002/pokemon-battle-simulator/main/src/images/${x.name}.png` }
+    let pokemon = { id: x.id, image: `https://raw.githubusercontent.com/KaranRansing2002/pokemon-battle-simulator/old_version/src/images/${x.name}.png` }
     pokemon.name = x.name
     pokemon.types = x.types
     pokemon.abilities = x.abilities
