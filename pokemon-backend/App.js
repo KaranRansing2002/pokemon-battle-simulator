@@ -24,7 +24,7 @@ app.use(cors(corsOptions)); // Use this after the variable declaration
 app.use(express.json());
 app.use(cookieParser());
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", urls[2]);
+  res.header("Access-Control-Allow-Origin", urls[1]);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Credentials", "true");
@@ -42,25 +42,46 @@ const io = new Server(server, {
 })
 
 const roomMap = {};   
-let roomAvail = -1;
+// let roomAvail = -1;
+let userRoomMap = {};
 const attacks = {};
 io.on("connection", (socket) => {
   console.log("user connected", socket.id)
 
   socket.on("searchForOnlineMatch", (data) => {
-    console.log(data); 
-    if (roomAvail == -1 && !roomMap[data.userid]) {
-      const room = uuidv4();
-      roomMap[data.userid] = room;
-      socket.join(room);
-      roomAvail = room;
+    // console.log(data); 
+    let room = -1;
+    for (let x of Object.keys(roomMap)) {
+      if (roomMap[x].length < 2) {
+        room = x;
+        break;
+      }
     }
-    else {
-      roomMap[data.userid] = roomAvail;
-      socket.join(roomAvail);
-      io.to(roomAvail).emit('game_start', roomAvail);
-      roomAvail = -1;
+    if (room == -1) {
+      room = uuidv4();  
+      roomMap[room] = [];
     }
+    socket.join(room);
+    roomMap[room].push(data.userid);
+    userRoomMap[data.userid] = room;
+    console.log(roomMap);
+    if (roomMap[room].length === 2) {
+      io.to(room).emit('game_start', room); 
+      room = -1;
+    }
+    // if (roomAvail == -1 && !roomMap[data.userid]) {
+    //   const room = uuidv4();
+    //   roomMap[data.userid] = room;
+    //   socket.join(room);
+    //   roomAvail = room;
+    // }
+    // else if (roomAvail !== -1 && !roomMap[data.userid]) {
+    //   console.log("online search",data); 
+    //   roomMap[data.userid] = roomAvail;
+    //   socket.join(roomAvail);
+    //   io.to(roomAvail).emit('game_start', roomAvail);
+    //   roomAvail = -1;
+    // }
   })
 
   socket.on("playerinfo", (data) => {
@@ -122,13 +143,14 @@ io.on("connection", (socket) => {
   })
   
   socket.on("user_disconnect", (data) => {
-    delete roomMap[data.userid];
+    const room = userRoomMap[data.userid];
+    delete roomMap[room];
     console.log(data.userid,roomMap);
     // roomAvail = -1;
   })
   socket.on("join_room", (data) => {
     console.log("room joined", data);
-    socket.join(data);
+    socket.join(data); 
   })
       
   socket.on("send_message", (data) => { 
