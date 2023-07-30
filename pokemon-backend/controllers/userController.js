@@ -4,7 +4,6 @@ async function getTeam(req, res) {
     try {
         const { email } = req.body;
         const user = await userModel.findOne({ email: email });
-        // console.log(user)
         return res.json({
             successfull: true,
             data : user["teams"]
