@@ -16,7 +16,7 @@ console.log("it is working !");
 const urls=["https://pokemon-showdown-mu.vercel.app",'http://localhost:5173','https://poke-showdown.vercel.app']
 
 const corsOptions = {
-  origin: urls[2],
+  origin: urls[1],
   credentials: true, //
 };
  
@@ -24,7 +24,7 @@ app.use(cors(corsOptions)); // Use this after the variable declaration
 app.use(express.json());
 app.use(cookieParser());
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", urls[2]);
+  res.header("Access-Control-Allow-Origin", urls[1]);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   res.header("Access-Control-Allow-Credentials", "true");
@@ -46,10 +46,10 @@ const roomMap = {};
 let userRoomMap = {};
 const attacks = {};
 io.on("connection", (socket) => {
-  console.log("user connected", socket.id)
+  // console.log("user connected", socket.id)
 
   socket.on("searchForOnlineMatch", (data) => {
-    // console.log(data); 
+    console.log(data.player.name,data.userid); 
     let room = -1;
     for (let x of Object.keys(roomMap)) {
       if (roomMap[x].length < 2) {
@@ -69,23 +69,10 @@ io.on("connection", (socket) => {
       io.to(room).emit('game_start', room); 
       room = -1;
     }
-    // if (roomAvail == -1 && !roomMap[data.userid]) {
-    //   const room = uuidv4();
-    //   roomMap[data.userid] = room;
-    //   socket.join(room);
-    //   roomAvail = room;
-    // }
-    // else if (roomAvail !== -1 && !roomMap[data.userid]) {
-    //   console.log("online search",data); 
-    //   roomMap[data.userid] = roomAvail;
-    //   socket.join(roomAvail);
-    //   io.to(roomAvail).emit('game_start', roomAvail);
-    //   roomAvail = -1;
-    // }
   })
 
   socket.on("playerinfo", (data) => {
-    console.log(data,"sd");
+    // console.log(data,"sd");
     socket.to(data.room).emit("playerinfo",data.player);  
   })
 
@@ -104,7 +91,7 @@ io.on("connection", (socket) => {
       if (attacks[data.room][0].player === data.player)
         attacks[data.room][0] = data;
       else {
-        if (attacks[data.room][0].move.spe < data.move.spe)
+        if (attacks[data.room][0].pokemon.spe > data.pokemon.spe)
           attacks[data.room].push(data);
         else
           attacks[data.room].unshift(data);
