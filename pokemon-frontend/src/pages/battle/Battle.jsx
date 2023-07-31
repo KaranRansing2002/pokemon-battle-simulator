@@ -116,9 +116,9 @@ function Battle({ state, socket, room, dispatch, battleTeam, setRoom }) {
                 }
             }, 1400);
         })
-        
+
         socket.on("message", (data) => {
-            setMessages(m=>[...m,data]);
+            setMessages(m => [...m, data]);
         })
 
         socket.on("resign", (data) => {
@@ -192,85 +192,87 @@ function Battle({ state, socket, room, dispatch, battleTeam, setRoom }) {
     }
 
     return (
-        <ThemeProvider theme={darkTheme}>
-            <div className='grid sm:grid-cols-7 grid-cols-1 h-screen gap-2 p-2 flex-grow sm:h-full w-full'>
+        <div className=' h-full sm:p-1 flex-grow'>
+            <ThemeProvider theme={darkTheme}>
+                <div className='grid sm:grid-cols-7 grid-cols-1 h-screen gap-2 p-2 flex-grow sm:h-full w-full'>
 
-                <div className='bg-[#1E2021] col-span-1 sm:col-span-4 p-2 grid grid-rows-6 gap-2 '>
-                    <div className={`row-span-6 rounded border-4 border-black bg-[url(${background})] bg-no-repeat bg-cover min-h-[300px] grid grid-rows-2`}>
-                        <div className='grid grid-cols-2 pt-4'>
-                            <div style={{ gridColumn: '2' }}>
-                                {state.player2.selectedPokemon && <RenderPokemon pokemon={state.player2.selectedPokemon} front key={state.player2?.selectedPokemon?.name} ToolTip={ToolTipComp} />}
+                    <div className='bg-[#1E2021] col-span-1 sm:col-span-4 p-2 grid grid-rows-6 gap-2 '>
+                        <div className={`row-span-6 rounded border-4 border-black bg-[url(${background})] bg-no-repeat bg-cover min-h-[300px] grid grid-rows-2`}>
+                            <div className='grid grid-cols-2 pt-4'>
+                                <div style={{ gridColumn: '2' }}>
+                                    {state.player2.selectedPokemon && <RenderPokemon pokemon={state.player2.selectedPokemon} front key={state.player2?.selectedPokemon?.name} ToolTip={ToolTipComp} />}
+                                </div>
+                            </div>
+                            <div className='grid grid-cols-2 '>
+                                {state.player1.selectedPokemon && <RenderPokemon pokemon={state.player1.selectedPokemon} key={state.player1.selectedPokemon.name} ToolTip={ToolTipComp} />}
                             </div>
                         </div>
-                        <div className='grid grid-cols-2 '>
-                            {state.player1.selectedPokemon && <RenderPokemon pokemon={state.player1.selectedPokemon} key={state.player1.selectedPokemon.name} ToolTip={ToolTipComp} />}
-                        </div>
-                    </div>
 
-                    {state.player1.selectedPokemon ? (
-                        <div className='row-span-1 grid grid-cols-4 gap-1 p-1 border-slate-400 border-2'>
-                            {state.player1.selectedPokemon.moves.map((move, index) => (
-                                <Tooltip key={index} arrow placement='bottom' title={<div className=''>
-                                    <div className={`border border-black text-black mb-1 w-auto rounded p-1 bg-[${types[move.Type.toLowerCase()]}]`}>{move.Type}</div>
-                                    <h3>pow : {move.Power} | acc : {move.Accuracy}</h3>
-                                </div>}>
-                                    <Button variant='contained' color='success' sx={{ padding: '2px' }} disabled={move.PP === 0} onClick={() => handleSelectMove(move)}>
-                                        <div className='font-bold sm:text-sm text-xs w-full '>
-                                            <h2 className='text-xs'>{move.Name}</h2>
-                                            <h3>{move.PP}</h3>
-                                        </div>
-                                    </Button>
-                                </Tooltip>
+                        {state.player1.selectedPokemon ? (
+                            <div className='row-span-1 grid grid-cols-4 gap-1 p-1 border-slate-400 border-2'>
+                                {state.player1.selectedPokemon.moves.map((move, index) => (
+                                    <Tooltip key={index} arrow placement='bottom' title={<div className=''>
+                                        <div className={`border border-black text-black mb-1 w-auto rounded p-1 bg-[${types[move.Type.toLowerCase()]}]`}>{move.Type}</div>
+                                        <h3>pow : {move.Power} | acc : {move.Accuracy}</h3>
+                                    </div>}>
+                                        <Button variant='contained' color='success' sx={{ padding: '2px' }} disabled={move.PP === 0} onClick={() => handleSelectMove(move)}>
+                                            <div className='font-bold sm:text-sm text-xs w-full '>
+                                                <h2 className='text-xs'>{move.Name}</h2>
+                                                <h3>{move.PP}</h3>
+                                            </div>
+                                        </Button>
+                                    </Tooltip>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className='w-full row-span-1 grid place-items-center text-red-400 uppercase  border-slate-400 p-1'>Please Select a pokemon to see their moves!</div>
+                        )}
+                        <div className='row-span-1 grid grid-cols-6 gap-1 border-slate-400 border-2 p-1 max-h-full'>
+                            {battleTeam.map((pokemon, index) => (
+                                <div
+                                    key={index}
+                                    className={`border-green-200 border bg-[#343434] hover:scale-[1.1] transition-scale duration-300 ${pokemon.currHp <= 0 && 'pointer-events-none brightness-50 cursor-not-allowed'} ease-in-out h-full grid place-items-center`}
+                                    onClick={() => handlePokemonSelect(pokemon)}
+                                >
+                                    <Tooltip arrow placement="bottom-end" title={<ToolTipComp pokemon={pokemon} />}><img src={pokemon.image} className='sm:h-16' alt={`Pokemon ${index + 1}`} /></Tooltip>
+                                </div>
                             ))}
                         </div>
-                    ) : (
-                        <div className='w-full row-span-1 grid place-items-center text-red-400 uppercase  border-slate-400 p-1'>Please Select a pokemon to see their moves!</div>
-                    )}
-                    <div className='row-span-1 grid grid-cols-6 gap-1 border-slate-400 border-2 p-1 max-h-full'>
-                        {battleTeam.map((pokemon, index) => (
-                            <div
-                                key={index}
-                                className={`border-green-200 border bg-[#343434] hover:scale-[1.1] transition-scale duration-300 ${pokemon.currHp <= 0 && 'pointer-events-none brightness-50 cursor-not-allowed'} ease-in-out h-full grid place-items-center`}
-                                onClick={() => handlePokemonSelect(pokemon)}
-                            >
-                                <Tooltip arrow placement="bottom-end" title={<ToolTipComp pokemon={pokemon} />}><img src={pokemon.image} className='sm:h-16' alt={`Pokemon ${index + 1}`} /></Tooltip>
-                            </div>
-                        ))}
                     </div>
-                </div>
 
-                <div className='bg-[#1E2021] sm:col-span-3 p-2 grid grid-rows-4 gap-2'>
-                    <div className='grid grid-cols-5 gap-1 row-span-1 h-full'>
-                        <div className='flex flex-col gap-1 col-span-4'>
-                            <Slot info={{ title: state.player1.name, image: state.player1.selectedPokemon?.image, message: status[0] }} battleTeam={battleTeam} lostcnt={lostCount[0]} />
-                            <Slot info={{ title: state.player2.name, image: state.player2.selectedPokemon?.image, message: status[1] }} battleTeam={battleTeam} lostcnt={lostCount[1]} />
-                        </div>
-                        <div className='col-span-1 grid gap-2 place-items-center h-full'>
-                            <div className='w-full bg-[#343434] border-2 border-black h-full'>
-                                <Timer setResign={setResign} timeUp={timeUp} setTimeUp={setTimeUp} move={state.player1.selectedMove} />
+                    <div className='bg-[#1E2021] sm:col-span-3 p-2 grid grid-rows-4 gap-2'>
+                        <div className='grid grid-cols-5 gap-1 row-span-1 h-full'>
+                            <div className='flex flex-col gap-1 col-span-4'>
+                                <Slot info={{ title: state.player1.name, image: state.player1.selectedPokemon?.image, message: status[0] }} battleTeam={battleTeam} lostcnt={lostCount[0]} />
+                                <Slot info={{ title: state.player2.name, image: state.player2.selectedPokemon?.image, message: status[1] }} battleTeam={battleTeam} lostcnt={lostCount[1]} />
                             </div>
-                            <div className='w-full bg-[#343434] border-2 border-black h-full grid place-items-center'>
-                                {resign === 'resign' && <Button size='small' color='error' variant='contained' onClick={() => setResign('confirm')}>resign</Button>}
-                                {resign === 'confirm' && <div className='w-full flex gap-2 justify-center'><IconButton onClick={() => setResign('resign')}><CloseIcon /></IconButton> <IconButton onClick={() => setResign('resigned')}><DoneIcon /></IconButton></div>}
+                            <div className='col-span-1 grid gap-2 place-items-center h-full'>
+                                <div className='w-full bg-[#343434] border-2 border-black h-full'>
+                                    <Timer setResign={setResign} timeUp={timeUp} setTimeUp={setTimeUp} move={state.player1.selectedMove} />
+                                </div>
+                                <div className='w-full bg-[#343434] border-2 border-black h-full grid place-items-center'>
+                                    {resign === 'resign' && <Button size='small' color='error' variant='contained' onClick={() => setResign('confirm')}>resign</Button>}
+                                    {resign === 'confirm' && <div className='w-full flex gap-2 justify-center'><IconButton onClick={() => setResign('resign')}><CloseIcon /></IconButton> <IconButton onClick={() => setResign('resigned')}><DoneIcon /></IconButton></div>}
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div className='row-span-3 bg-[#343434] border-2 border-black flex flex-col p-1'>
-                        <div className='flex-1 border-2 border-black'>
-                            <Chat messages={messages} user={user} />
-                        </div>
-                        <div className='flex gap-1 mt-1 text-white border-2 border-black p-1'>
-                            <form onSubmit={(e) => { e.preventDefault(); sendMessage(); }} className='flex w-full flex-1'>
-                                <input className='bg-[#1E2021] flex-1 border text-white p-1 border-blue-400' placeholder='Chat here!' onChange={(e)=>setMessage(e.target.value)} />
-                            </form>
-                            <Button onClick={sendMessage} variant='contained'>send</Button>
+                        <div className='row-span-3 bg-[#343434] border-2 border-black flex flex-col p-1'>
+                            <div className='flex-1 border-2 border-black'>
+                                <Chat messages={messages} user={user} />
+                            </div>
+                            <div className='flex gap-1 mt-1 text-white border-2 border-black p-1'>
+                                <form onSubmit={(e) => { e.preventDefault(); sendMessage(); }} className='flex w-full flex-1'>
+                                    <input className='bg-[#1E2021] flex-1 border text-white p-1 border-blue-400' placeholder='Chat here!' onChange={(e) => setMessage(e.target.value)} />
+                                </form>
+                                <Button onClick={sendMessage} variant='contained'>send</Button>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <GameEnd open={open} setOpen={setOpen} {...gameEnd} user={user} setRoom={setRoom} />
-        </ThemeProvider>
-    ) 
+                <GameEnd open={open} setOpen={setOpen} {...gameEnd} user={user} setRoom={setRoom} />
+            </ThemeProvider>
+        </div>
+    )
 }
 
 export default Battle

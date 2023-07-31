@@ -186,7 +186,7 @@ function BattleMatchMaking() {
     }
 
     return (
-        <div className=''>
+        <div className='h-full'>
             <Battle state={state} socket={socket} room={roomid} dispatch={dispatch} battleTeam={battleTeam} setRoom={setRoomid} />
         </div>
     )

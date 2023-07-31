@@ -90,7 +90,7 @@ const TeamBuilder = () => {
   }
 
   return (
-    <div className="p-4 text-white">
+    <div className="p-2 text-white h-full flex-grow">
       <div className="grid sm:grid-cols-3 grid-cols-1 grid-rows-2 sm:grid-rows-1 gap-4">
         <div className="sm:col-span-2 flex flex-col bg-[#1E2021]">
           <div className="flex-grow">

@@ -112,7 +112,7 @@ function MyTeams() {
     }
 
     return (
-        <div className="grid sm:grid-cols-3 grid-cols-1 gap-4 sm:grid-rows-1 grid-rows-2 p-2">
+        <div className="grid sm:grid-cols-3 h-full grid-cols-1 gap-4 sm:grid-rows-1 grid-rows-2 p-2">
             <div className="sm:col-span-2 bg-[#1E2021] p-4 flex flex-col gap-4">
                 <div className="grid place-items-center gap-2">
                     {ind != undefined && <TeamSlots border team={data[ind].team} />}
