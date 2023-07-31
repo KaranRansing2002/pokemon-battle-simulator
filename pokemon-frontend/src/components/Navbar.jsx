@@ -23,6 +23,8 @@ const Navbar = () => {
     await axios.get(`${api}/user/logout`, {
       withCredentials : true
     });
+    localStorage.clear();
+    navigate('/');
     setUserinfo(undefined);
   }
 
