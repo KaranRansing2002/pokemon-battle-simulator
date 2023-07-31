@@ -102,8 +102,13 @@ const MovesTable = ({ pokemon, selectedMoves, setSelectedMoves }) => {
                     },
                     '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb-horizontal:hover': {
                         background: '#555',
-                    }
+                    },
+                    
                 }}
+                style={{
+                    height: '100%', 
+                    overflow: 'hidden', 
+                  }}
                 checkboxSelection
                 onRowSelectionModelChange={(ids) => {
                     const selectedRows = data.filter((row) => ids.includes(row.id));
@@ -114,11 +119,11 @@ const MovesTable = ({ pokemon, selectedMoves, setSelectedMoves }) => {
                 columns={columns}
                 initialState={{
                     pagination: {
-                        paginationModel: { page: 0, pageSize: 8 },
+                        paginationModel: { page: 0, pageSize: 10 },
                     },
                 }}
                 isRowSelectable={(params) => (selectedMoves.length < 4 || selectedMoves.some((x) => x.id === params.id))}
-                pageSizeOptions={[8, 10,]}
+                pageSizeOptions={[10, 10,]}
                 slots={{ toolbar: QuickSearchToolbar }}
             />
         </div>

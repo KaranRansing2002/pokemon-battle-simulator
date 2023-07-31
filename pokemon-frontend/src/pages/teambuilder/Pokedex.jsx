@@ -81,7 +81,7 @@ function QuickSearchToolbar() {
   );
 }
 
-export default function Pokedex({ setSelectedPokemons,selectedPokemons }) {
+export default function Pokedex({ setSelectedPokemons, selectedPokemons }) {
 
   const { data, isLoading, error } = useSWR(`${api}/pokemon/all`, fetcher);
   const [rowids, setRowids] = useState([]);
@@ -89,7 +89,7 @@ export default function Pokedex({ setSelectedPokemons,selectedPokemons }) {
   useEffect(() => {
     setRowids(selectedPokemons.map(x => x.id))
     // console.log(selectedPokemons)
-  },[selectedPokemons])
+  }, [selectedPokemons])
 
   if (error) {
     return (
@@ -140,6 +140,11 @@ export default function Pokedex({ setSelectedPokemons,selectedPokemons }) {
             background: '#555',
           },
         }}
+        style={{
+          height: '100%', 
+          overflow: 'hidden', 
+        }}
+
         checkboxSelection
         onRowSelectionModelChange={(ids) => {
           const selectedRows = data.filter((row) => ids.includes(row.id));
@@ -152,18 +157,18 @@ export default function Pokedex({ setSelectedPokemons,selectedPokemons }) {
             }
           })
           // console.log(selectedRows)
-          if(selectedRows.length<=6)setSelectedPokemons(selectedRows)
+          if (selectedRows.length <= 6) setSelectedPokemons(selectedRows)
         }}
         rowSelectionModel={rowids}
-        isRowSelectable={(params) => (selectedPokemons.length<6 || selectedPokemons.some((x)=>x.id===params.id))}
+        isRowSelectable={(params) => (selectedPokemons.length < 6 || selectedPokemons.some((x) => x.id === params.id))}
         rows={data}
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 8 },
+            paginationModel: { page: 0, pageSize: 4 },
           },
         }}
-        pageSizeOptions={[8, 10,]}
+        pageSizeOptions={[4, 10,]}
         slots={{ toolbar: QuickSearchToolbar }}
       />
     </div>
