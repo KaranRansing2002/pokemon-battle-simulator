@@ -11,6 +11,7 @@ import api from './helper/api'
 import MyTeams from './pages/myteams/MyTeams'
 import Battle from './pages/battle/Battle'
 import BattleMatchMaking from './pages/battle/BattleMatchMaking';
+import LeaderBoard from './pages/leaderboards/LeaderBoard';
 
 export const userContext = createContext();
 
@@ -48,6 +49,7 @@ function App() {
               <Route path='/signup' exact element={<Signup />}></Route>
               <Route path='/myteams' exact element={<MyTeams />}></Route>
               <Route path='/battle' exact element={<BattleMatchMaking />}></Route>
+              <Route path='/leaderboard' exact element={<LeaderBoard />}></Route>
             </Routes>
           </div>
         </Router>
