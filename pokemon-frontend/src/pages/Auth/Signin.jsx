@@ -77,7 +77,7 @@ export default function Signin() {
     });
 
     return (
-        <div className="w-full grid place-items-center p-2 gap-2">
+        <div className="w-full grid place-items-center p-2 gap-2 h-full grid place-items-center">
             <div className="bg-[#1E2021] pb-8 rounded-lg ">
                 <ThemeProvider theme={darkTheme}>
                     <Container component="main" maxWidth="xs">
@@ -132,7 +132,7 @@ export default function Signin() {
                                         </Link>
                                     </Grid>
                                     <Grid item className="cursor-pointer">
-                                        <Link href="/signup" variant="body2">
+                                        <Link onClick={()=>navigate('/signup')} variant="body2">
                                             {"Don't have an account? Sign Up"}
                                         </Link>
                                     </Grid>

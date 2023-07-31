@@ -61,7 +61,7 @@ export default function Signup() {
     };
 
     return (
-        <div className='grid place-items-center p-2'>
+        <div className='grid place-items-center p-2 h-full grid place-items-center'>
             <div className='bg-[#1E2021] rounded-lg'>
                 <ThemeProvider theme={darkTheme}>
                     <Container component="main" maxWidth="xs">
@@ -143,7 +143,7 @@ export default function Signup() {
                                 </Button>
                                 <Grid container justifyContent="flex-end">
                                     <Grid item>
-                                        <Link href="/signin" variant="body2">
+                                        <Link onClick={()=>navigate('/signin')} variant="body2">
                                             Already have an account? Sign in
                                         </Link>
                                     </Grid>
