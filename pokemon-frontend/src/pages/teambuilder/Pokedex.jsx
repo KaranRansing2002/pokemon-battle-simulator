@@ -165,10 +165,10 @@ export default function Pokedex({ setSelectedPokemons, selectedPokemons }) {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 4 },
+            paginationModel: { page: 0, pageSize: 8 },
           },
         }}
-        pageSizeOptions={[4, 10,]}
+        pageSizeOptions={[8, 10,]}
         slots={{ toolbar: QuickSearchToolbar }}
       />
     </div>
