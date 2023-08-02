@@ -12,13 +12,17 @@ function Timer({setResign,timeUp,setTimeUp,move}) {
             clearInterval(timer);
             if (!move) {
                 setResign('resigned');
-                setTimeUp(true);
+                // setTimeUp(false);
             }
             setSeconds(30);
         }
 
         return () => clearInterval(timer);
     }, [seconds]);
+
+    useEffect(() => {
+        setSeconds(30);
+    },[timeUp])
 
     return (
         <div className='text-white text-center flex flex-col justify-center items-center h-full uppercase'>

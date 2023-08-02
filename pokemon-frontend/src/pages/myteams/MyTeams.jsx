@@ -29,7 +29,7 @@ const darkTheme = createTheme({
 export const TeamSlots = ({ team, border }) => {
     return (
         <div
-            className={`grid grid-cols-6 gap-2 p-2 bg-[#1E2021] border-${border ? 'red-400' : 'slate-400'
+            className={`grid grid-cols-6 gap-2 p-2 bg-[#1E2021] ${border ? 'border-red-400' : 'border-slate-400'
                 } hover:border-green-400 hover:transition-colors duration-300 cursor-pointer border-2`}
         >
             {team.map((pokemon, index) => (

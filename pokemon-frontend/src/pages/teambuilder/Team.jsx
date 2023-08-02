@@ -37,11 +37,11 @@ function Team({ selectedPokemons }) {
                                 <div className='flex gap-2'>
                                     {
                                         selectedPokemon.types.map((type, ind) => (
-                                            <div key={ind} className={`h-6  text-xs my-4 flex items-center justify-center p-2  border-black border-2 rounded text-black uppercase bg-[${types[type]}] rounded-md `}>{type}</div>
+                                            <div key={ind} className={`h-6  text-xs my-4 flex items-center justify-center p-2  border-black border-2 text-black uppercase rounded-md `} style={{backgroundColor: types[type]}}>{type}</div>
                                         ))
                                     }
                                 </div>
-                                <div className='flex flex-col gap-2'>
+                                <div className='flex flex-col gap-2 text-white'>
                                     <h2>choose ability</h2>
                                     <div className='flex flex-wrap gap-2'>
                                         {

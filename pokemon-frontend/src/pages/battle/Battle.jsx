@@ -62,7 +62,7 @@ function Battle({ state, socket, room, dispatch, battleTeam, setRoom }) {
     const [lostCount, setLostCount] = useState([0, 0]);
     const [gameEnd, setGameEnd] = useState(undefined);
     const [open, setOpen] = useState(false);
-    const [timeUp, setTimeUp] = useState(false);
+    const [timeUp, setTimeUp] = useState(30);
     const [messages, setMessages] = useState([]);
     const [message, setMessage] = useState('');
 
@@ -103,6 +103,7 @@ function Battle({ state, socket, room, dispatch, battleTeam, setRoom }) {
                 }
             });
             setStatus([player1.message, player2.message]);
+            setTimeUp(30);
             timeoutid = setTimeout(() => {
                 if (player1.pokemon.currHp <= 0) {
                     setLostCount(p => [p[0] + 1, p[1]]);
@@ -197,7 +198,7 @@ function Battle({ state, socket, room, dispatch, battleTeam, setRoom }) {
                 <div className='grid sm:grid-cols-7 grid-cols-1 h-screen gap-2 p-2 flex-grow sm:h-full w-full'>
 
                     <div className='bg-[#1E2021] col-span-1 sm:col-span-4 p-2 grid grid-rows-6 gap-2 '>
-                        <div className={`row-span-6 rounded border-4 border-black bg-[url(${background})] bg-no-repeat bg-cover min-h-[300px] grid grid-rows-2`}>
+                        <div className={`row-span-6 rounded border-4 border-black bg-[url(${background})] bg-no-repeat bg-cover min-h-[300px] grid grid-rows-2`} style={{backgroundImage : `url(${background})`}}>
                             <div className='grid grid-cols-2 pt-4'>
                                 <div style={{ gridColumn: '2' }}>
                                     {state.player2.selectedPokemon && <RenderPokemon pokemon={state.player2.selectedPokemon} front key={state.player2?.selectedPokemon?.name} ToolTip={ToolTipComp} />}

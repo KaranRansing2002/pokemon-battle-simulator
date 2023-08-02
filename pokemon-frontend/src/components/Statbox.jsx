@@ -34,7 +34,7 @@ const Statbox = ({ pokemon }) => {
             <div className='grid col-span-4 place-items-center'>
                 {
                     arr.map((stat, index) => (
-                        <div key={index} className='bg-[#1E2021] h-2 rounded w-full border border-slate-500'><div className={`rounded border-black border h-2 w-[${stats[stat]}%] bg-green-400 transition-width duration-500 ease-linear `}></div></div>
+                        <div key={index} className='bg-[#1E2021] h-2 rounded w-full border border-slate-500'><div className={`rounded border-black border h-2 bg-green-400 transition-width duration-500 ease-linear `} style={{width : `${stats[stat]}%`}}></div></div>
                     ))
                 }
             </div>

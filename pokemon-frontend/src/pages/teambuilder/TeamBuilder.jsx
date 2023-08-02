@@ -123,7 +123,7 @@ const TeamBuilder = () => {
                         <div className='flex gap-2'>
                           {
                             selectedPokemon.types.map((type, ind) => (
-                              <div key={ind} className={`h-6  text-xs my-4 flex items-center justify-center p-2  border-black border-2 rounded text-black uppercase bg-[${types[type]}] rounded-md `}>{type}</div>
+                              <div key={ind} className={`h-6  text-xs my-4 flex items-center justify-center p-2  border-black border-2 text-black uppercase rounded-md `} style={{backgroundColor : types[type]}}>{type}</div>
                             ))
                           }
                         </div>

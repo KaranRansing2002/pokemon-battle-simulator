@@ -24,7 +24,7 @@ function RenderPokemon({ pokemon, ToolTip, front }) {
       <div className='flex flex-col gap-1 items-center'>
         <div className='flex items-center'>
           <div className={`border-2 border-black rounded-lg bg-white sm:w-40 w-24 h-3 ${front ? 'ml-[-1rem]' : 'ml-8'} `}>
-            <div className={`h-full w-[${hp}%] border-r border-black rounded-lg bg-green-500 transition-width ease-in-out duration-500`}></div>
+            <div className={`h-full border-r border-black rounded-lg bg-green-500 transition-width ease-in-out duration-500`} style={{width : `${hp}%`}}></div>
           </div>
           <div className='text-xs text-bold'>{hp}%</div>
         </div>
