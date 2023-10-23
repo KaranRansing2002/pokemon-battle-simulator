@@ -10,7 +10,7 @@ import api from '../helper/api';
 const Navbar = () => {
   const [nav, setNav] = useState(false);
 
-  const { userinfo,setUserinfo } = useContext(userContext);
+  const { userinfo, setUserinfo } = useContext(userContext);
 
   // console.log(userinfo)
 
@@ -21,7 +21,7 @@ const Navbar = () => {
   };
   const handleLogout = async () => {
     await axios.get(`${api}/user/logout`, {
-      withCredentials : true
+      withCredentials: true
     });
     localStorage.clear();
     navigate('/');
@@ -29,7 +29,7 @@ const Navbar = () => {
   }
 
   return (
-    <div className='flex justify-between w-full items-center mx-auto px-4 text-white '>
+    <div className='flex justify-between w-full items-center mx-auto px-4 text-white'>
       <Link to='/'><h1 className='ml-4 text-3xl font-bold text-[#00df9a]'>SHOWDOWN</h1></Link>
       <ul className='hidden md:flex items-center'>
         <Link to='/'><li className='p-4 hover:text-[#00df9a] transition-colors duration-500 ease-in-out cursor-pointer'>Home</li></Link>
@@ -38,7 +38,7 @@ const Navbar = () => {
         <Link to='/battle'><li className='p-4 hover:text-[#00df9a] transition-colors duration-500 ease-in-out cursor-pointer'>Battle</li></Link>
         <Link to='/leaderboard'><li className='p-4 hover:text-[#00df9a] transition-colors duration-500 ease-in-out cursor-pointer'>LeaderBoard</li></Link>
         {userinfo ? <li className='p-4 text-[#00df9a] font-bold uppercase cursor-pointer'>{userinfo.username}</li> : <Button onClick={() => navigate('/signin')} id='idr' variant='contained' size='small' sx={{ marginLeft: '40px', backgroundColor: '#560bad' }}>sign-in</Button>}
-        {userinfo && <Button onClick={() => {handleLogout()}} id='idr' variant='contained' size='small' sx={{ marginLeft: '0px', backgroundColor: '#560bad' }}>logout</Button>}
+        {userinfo && <Button onClick={() => { handleLogout() }} id='idr' variant='contained' size='small' sx={{ marginLeft: '0px', backgroundColor: '#560bad' }}>logout</Button>}
       </ul>
       <div onClick={handleNav} className='block md:hidden'>
         {nav ? <AiOutlineClose size={20} /> : <AiOutlineMenu size={20} />}
