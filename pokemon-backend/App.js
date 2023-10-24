@@ -8,23 +8,23 @@ const movesRouter = require("./routers/movesRouter");
 const userRouter = require("./routers/userRouter");
 const http = require('http')
 const { v4: uuidv4 } = require('uuid');
-const {Server} = require("socket.io");
+const { Server } = require("socket.io");
 const damage = require("./damage");
 
 console.log("it is working !");
 
-const urls=["https://pokemon-showdown-mu.vercel.app",'http://localhost:5173','https://poke-showdown.vercel.app']
+const urls = ["https://pokemon-showdown-mu.vercel.app", 'http://localhost:5173', 'https://poke-showdown.vercel.app']
 
 const url = urls[2];
 const corsOptions = {
   origin: url,
   credentials: true, //
 };
- 
+
 app.use(cors(corsOptions)); // Use this after the variable declaration
 app.use(express.json());
 app.use(cookieParser());
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", url);
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
@@ -32,17 +32,17 @@ app.use(function(req, res, next) {
   next();
 });
 const server = app.listen(8000, () => {
-  console.log("Server started.");  
-}); 
+  console.log("Server started.");
+});
 
 const io = new Server(server, {
   cors: {
     origin: "*",
-    methods : ['GET','POST','PATCH','DELETE']
+    methods: ['GET', 'POST', 'PATCH', 'DELETE']
   }
 })
 
-const roomMap = {};   
+const roomMap = {};
 // let roomAvail = -1;
 let userRoomMap = {};
 const attacks = {};
@@ -50,7 +50,7 @@ io.on("connection", (socket) => {
   // console.log("user connected", socket.id)
 
   socket.on("searchForOnlineMatch", (data) => {
-    console.log(data.player.name,data.userid); 
+    console.log(data.player.name, data.userid);
     let room = -1;
     for (let x of Object.keys(roomMap)) {
       if (roomMap[x].length < 2) {
@@ -59,7 +59,7 @@ io.on("connection", (socket) => {
       }
     }
     if (room == -1) {
-      room = uuidv4();  
+      room = uuidv4();
       roomMap[room] = [];
     }
     socket.join(room);
@@ -67,25 +67,25 @@ io.on("connection", (socket) => {
     userRoomMap[data.userid] = room;
     console.log(roomMap);
     if (roomMap[room].length === 2) {
-      io.to(room).emit('game_start', room); 
+      io.to(room).emit('game_start', room);
       room = -1;
     }
   })
 
   socket.on("playerinfo", (data) => {
     // console.log(data,"sd");
-    socket.to(data.room).emit("playerinfo",data.player);  
+    socket.to(data.room).emit("playerinfo", data.player);
   })
 
   socket.on("opponentPokemon", (data) => {
-    socket.to(data.room).emit("opponentPokemon",data.selectedPokemon);
-  })  
-            
+    socket.to(data.room).emit("opponentPokemon", data.selectedPokemon);
+  })
+
   socket.on("attack", (data) => {
-    
+
     // console.log(data);
     if (!attacks[data.room]) {
-      attacks[data.room] = []; 
+      attacks[data.room] = [];
     }
     if (attacks[data.room].length === 0) attacks[data.room].push(data);
     if (attacks[data.room].length === 1) {
@@ -96,15 +96,15 @@ io.on("connection", (socket) => {
           attacks[data.room].push(data);
         else
           attacks[data.room].unshift(data);
-          
-        const player1 = attacks[data.room][0],player2=attacks[data.room][1];
+
+        const player1 = attacks[data.room][0], player2 = attacks[data.room][1];
         const damage1 = damage(player1.pokemon, player2.pokemon, player1.move);
         const damage2 = damage(player2.pokemon, player1.pokemon, player2.move);
 
         player2.pokemon.currHp -= damage1;
         let ok = player2.pokemon.currHp <= 0;
-        player1.pokemon.currHp -= ok ? 0 : damage2;  
-   
+        player1.pokemon.currHp -= ok ? 0 : damage2;
+
         const data1 = {
           name: player1.player,
           pokemon: player1.pokemon,
@@ -116,44 +116,44 @@ io.on("connection", (socket) => {
           message: ok ? `Opponent's attack struck first, causing Pokemon's defeat.` : `Follow-up attack with ${player2.move.Name} deals ${damage2.toFixed(2)} damage!`
         }
         console.log('here');
-        io.to(data.room).emit("damageInfo", { data1, data2 }); 
+        io.to(data.room).emit("damageInfo", { data1, data2 });
         attacks[data.room] = [];
-      }        
-    } 
+      }
+    }
   })
 
   socket.on("message", (data) => {
-    socket.to(data.room).emit("message", { user: data.user, message: data.message });          
+    socket.to(data.room).emit("message", { user: data.user, message: data.message });
   })
 
   socket.on('resign', (data) => {
-    socket.to(data.room).emit('resign', { winner: data.winner, message: data.message });    
+    socket.to(data.room).emit('resign', { winner: data.winner, message: data.message });
   })
-  
+
   socket.on("user_disconnect", (data) => {
     const room = userRoomMap[data.userid];
     delete roomMap[room];
-    console.log(data.userid,roomMap);
+    console.log(data.userid, roomMap);
     // roomAvail = -1;
   })
   socket.on("join_room", (data) => {
     console.log("room joined", data);
-    socket.join(data); 
+    socket.join(data);
   })
-      
-  socket.on("send_message", (data) => { 
+
+  socket.on("send_message", (data) => {
     console.log(data);
     socket.to(data.roomid).emit("receive_message", data);
   })
- 
+
   socket.on("pokemon", (data) => {
     console.log(data);
-    socket.to(data.roomid).emit("opponent_pokemon",data)
+    socket.to(data.roomid).emit("opponent_pokemon", data)
   })
 
   socket.on("currhp", (data) => {
     socket.to(data.roomid).emit("opponent_hp", data);
-  })    
+  })
 
   socket.on("attack", (data) => {
     // console.log("here",data);
@@ -166,16 +166,16 @@ io.on("connection", (socket) => {
 
 })
 
-   
+
 
 app.get("/", (req, res) => {
   res.json("Hello world sdfsfs");
 });
 
 
-app.use('/pokemon',pokemonRouter)
+app.use('/pokemon', pokemonRouter)
 app.use('/moves', movesRouter)
-app.use('/user',userRouter)
+app.use('/user', userRouter)
 
 
 
