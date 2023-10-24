@@ -1,6 +1,6 @@
 const express = require('express');
 const { signin, signup, protectRoute, logout,login } = require('../controllers/authController');
-const { getTeam, addTeam, deleteTeam, getAllusers } = require('../controllers/userController');
+const { getTeam, addTeam, deleteTeam, getAllusers, getUser } = require('../controllers/userController');
 const userRouter = express.Router();
 
 userRouter.route('/login')
@@ -25,4 +25,7 @@ userRouter.route('/teams/:id')
 userRouter.route('/all')
     .get(getAllusers)
 
-module.exports = userRouter;;
+userRouter.route('/:username')
+    .get(getUser)
+
+module.exports = userRouter;

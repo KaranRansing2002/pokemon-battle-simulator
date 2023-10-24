@@ -73,7 +73,7 @@ async function deleteTeam(req, res) {
 
 async function getAllusers(req, res) {
     try {
-        const users = await userModel.find().select('-password -email -teams');
+        let users = await userModel.find().select('-password -email -teams -_id -__v').sort({elo : -1}).limit(50);
         return res.json(users);
     } catch (error) {
         console.log(error);
@@ -82,10 +82,25 @@ async function getAllusers(req, res) {
         })
     }
 }
- 
+
+async function getUser(req, res) {
+    try {
+        const {username} = req.params
+        const user = await userModel.findOne({ username }).select('-password -__v');
+        return res.json(user);
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            error : error.message
+        })
+    }
+
+}
+
 module.exports = {
     addTeam,
     getTeam,
     deleteTeam,
-    getAllusers
+    getAllusers,
+    getUser
 } 
