@@ -1,27 +1,23 @@
 const express = require("express");
-const { default: mongoose } = require("mongoose");
 const app = express();
 const cookieParser = require('cookie-parser');
 const cors = require("cors");
 const pokemonRouter = require("./routers/pokemonRouter");
 const movesRouter = require("./routers/movesRouter");
 const userRouter = require("./routers/userRouter");
-const http = require('http')
 const { v4: uuidv4 } = require('uuid');
 const {Server} = require("socket.io");
-const damage = require("./damage");
-
-console.log("it is working !");
+const damage = require("./helper/damage");
 
 const urls=["https://pokemon-showdown-mu.vercel.app",'http://localhost:5173','https://poke-showdown.vercel.app']
 
 const url = urls[2];
 const corsOptions = {
   origin: url,
-  credentials: true, //
+  credentials: true, 
 };
  
-app.use(cors(corsOptions)); // Use this after the variable declaration
+app.use(cors(corsOptions)); 
 app.use(express.json());
 app.use(cookieParser());
 app.use(function(req, res, next) {
@@ -41,7 +37,7 @@ const io = new Server(server, {
     methods : ['GET','POST','PATCH','DELETE']
   }
 })
-
+    
 const roomMap = {};   
 // let roomAvail = -1;
 let userRoomMap = {};

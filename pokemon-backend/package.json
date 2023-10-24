@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@smogon/calc": "^0.8.0",
     "axios": "^1.2.1",
     "bcrypt": "^5.1.0",
     "cookie-parser": "^1.4.6",

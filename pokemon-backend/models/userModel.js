@@ -44,7 +44,11 @@ const userSchema = mongoose.Schema({
     },
     teams : {
         type: Array,
-    } 
+    },
+    elo: {
+        type: Number,
+        default : 500
+    }
 }) 
 
 userSchema.pre('save', function () {
