@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import useSWR from 'swr'
 import api from '../../helper/api'
-import { Box, Button, Tooltip } from '@mui/material';
+import { Box, Tooltip } from '@mui/material';
 import axios from 'axios';
 import Loader from '../../components/Loaders/Loader';
 import { DataGrid, GridToolbarQuickFilter } from '@mui/x-data-grid';
@@ -15,7 +15,7 @@ let columns = [
         headerName: 'Type',
         sortable: false,
         width: 90,
-        renderCell: (params) => <div className={`h-6 w-20 text-xs my-4 flex items-center justify-center p-2  border-black border-2 rounded bg-[${types[params.value.toLowerCase()]}]`} >{params.value}</div>,
+        renderCell: (params) => <div className={`h-6 w-20 text-xs my-4 flex items-center justify-center p-2  border-black border-2 rounded`} style={{ backgroundColor: types[params.value.toLowerCase()] }} >{params.value}</div>,
         getApplyQuickFilterFn: undefined
     },
     { field: 'Effect', headerName: 'Effect', width: 400, getApplyQuickFilterFn: undefined },
@@ -103,12 +103,12 @@ const MovesTable = ({ pokemon, selectedMoves, setSelectedMoves }) => {
                     '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb-horizontal:hover': {
                         background: '#555',
                     },
-                    
+
                 }}
                 style={{
-                    height: '100%', 
-                    overflow: 'hidden', 
-                  }}
+                    height: '100%',
+                    overflow: 'hidden',
+                }}
                 checkboxSelection
                 onRowSelectionModelChange={(ids) => {
                     const selectedRows = data.filter((row) => ids.includes(row.id));
