@@ -11,11 +11,11 @@ const damage = require("./helper/damage");
 
 const urls=["https://pokemon-showdown-mu.vercel.app",'http://localhost:5173','https://poke-showdown.vercel.app']
 
-const url = urls[2];
+const url = "*";
 const corsOptions = {
   origin: url,
   credentials: true, 
-};
+}; 
  
 app.use(cors(corsOptions)); 
 app.use(express.json());
