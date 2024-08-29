@@ -106,7 +106,7 @@ export default function Pokedex({ setSelectedPokemons, selectedPokemons }) {
     return (
 
       <div className='grid place-items-center bg-[#1E2021] grid-rows-1 '>
-        <div className='grid row-span-1 p-20'>
+        <div className='grid row-span-1 px-36 sm:px-96'>
           <Loader />
           <h2 className='text-xl'>. . . Loading</h2>
         </div>
@@ -165,10 +165,10 @@ export default function Pokedex({ setSelectedPokemons, selectedPokemons }) {
         columns={columns}
         initialState={{
           pagination: {
-            paginationModel: { page: 0, pageSize: 8 },
+            paginationModel: { page: 0, pageSize: 10 },
           },
         }}
-        pageSizeOptions={[8, 10,]}
+        pageSizeOptions={[10,15]}
         slots={{ toolbar: QuickSearchToolbar }}
       />
     </div>

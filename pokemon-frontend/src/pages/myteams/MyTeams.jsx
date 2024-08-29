@@ -136,7 +136,7 @@ function MyTeams() {
                         </Button>
                     </div>
                 </div>
-                <div className="flex flex-col gap-2 sm:px-4 max-h-96 overflow-y-scroll">
+                <div className="flex flex-col gap-2 sm:px-4  overflow-auto">
                     <h2 className="text-green-400 mb-2 uppercase font-bold">Select a team by clicking on them (total : {count}) </h2>
                     {data.map((obj, index) => (
                         <div onClick={() => setInd(index)} key={index}>

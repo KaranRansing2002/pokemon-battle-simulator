@@ -92,7 +92,7 @@ const TeamBuilder = () => {
   }
 
   return (
-    <div className=' h-full grid place-items-center'>
+    <div className=' h-full grid place-items-center sm:px-2'>
       <div className='h-full'>
         <div className="p-2 text-white h-full flex-grow">
           <div className="grid sm:grid-cols-3 grid-cols-1 grid-rows-2 sm:grid-rows-1 gap-4 h-full">
@@ -103,7 +103,7 @@ const TeamBuilder = () => {
             </div>
             <div className="sm:col-span-1 bg-[#1E2021] rounded-md flex flex-col gap-2 p-2">
               {
-                selectedPokemon &&
+                selectedPokemon ?
                 <>
                   <div className='grid grid-cols-6 gap-2'>
                     {
@@ -165,7 +165,10 @@ const TeamBuilder = () => {
                       <div onClick={handleSave}>{<SnackBar title={title} severity={severity} />}</div>
                     </div>
                   </div>
-                </>
+                </> :
+                <div className='grid place-items-center h-full'>
+                  <h1 className='text-center text-blue-400 font-bold font-mono'>Please select six pokemons of your size to build your team</h1>
+                </div>
               }
             </div>
           </div>

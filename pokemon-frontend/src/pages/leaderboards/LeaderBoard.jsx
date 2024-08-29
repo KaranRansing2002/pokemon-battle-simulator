@@ -25,7 +25,7 @@ const LeaderBoard = () => {
 
   if (isLoading) {
     return (
-      <div className="grid place-items-center bg-[#1E2021] grid-rows-1">
+      <div className="grid place-items-center grid-rows-1">
         <div className="grid row-span-1 p-20">
           <Loader />
           <h2 className="text-xl text-white">Loading...</h2>
@@ -36,39 +36,29 @@ const LeaderBoard = () => {
 
 
   return (
-    <div className="grid place-items-center mt-10">
-      <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
-        <table className="w-full text-sm text-left text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
-            <tr>
-              <th scope="col" className="px-6 py-3">
-                Rank
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Username
-              </th>
-              <th scope="col" className="px-6 py-3">
-                Elo
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {
-              data.map((obj, idx) => (
-                <tr key={idx} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    {idx + 1}
-                  </th>
-                  <td className="px-6 py-4">{obj.username}</td>
-                  <td className="px-6 py-4">{obj.elo}</td>
-                </tr>
-              ))
-            }
-          </tbody>
-        </table>
-      </div>
+    <div className="grid place-items-center p-4 text-white">
+      <h2 className="font-bold text-xl text-white underline">Leaderboard</h2>
+
+      <table className="border p-4 rounded " border="1">
+        <thead className="">
+          <tr>
+            <th className="border p-2">Rank</th>
+            <th className="border">Name</th>
+            <th>Elo</th>
+          </tr>
+        </thead>
+        <tbody>
+          {
+            data.map((row, ind) => (
+              <tr className="border ">
+                <td className="border px-8 text-red-500 p-4">{ind + 1}</td>
+                <td className="border px-8">{row.username}</td>
+                <td className="px-4 text-green-400">{row.elo}</td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
     </div>
   );
 };
