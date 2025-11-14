@@ -92,91 +92,155 @@ const TeamBuilder = () => {
   }
 
   return (
-    <div className=' h-full grid place-items-center sm:px-2'>
-      <div className='h-full'>
-        <div className="p-2 text-white h-full flex-grow">
-          <div className="grid sm:grid-cols-3 grid-cols-1 grid-rows-2 sm:grid-rows-1 gap-4 h-full">
-            <div className="sm:col-span-2 flex flex-col bg-[#1E2021] h-full">
-              <div className="flex-grow h-full">
-                {toggle ? <MovesTable pokemon={selectedPokemon} selectedMoves={selectedMoves} setSelectedMoves={setSelectedMoves} /> : <Pokedex setSelectedPokemons={setSelectedPokemons} selectedPokemons={selectedPokemons} />}
-              </div>
-            </div>
-            <div className="sm:col-span-1 bg-[#1E2021] rounded-md flex flex-col gap-2 p-2">
-              {
-                selectedPokemon ?
-                <>
-                  <div className='grid grid-cols-6 gap-2'>
-                    {
-                      selectedPokemons.map((pokemon, ind) => (
-                        <Tooltip title={pokemon.name} key={ind}>
-                          <div className='bg-[#343434] hover:border hover:border-black cursor-pointer' onClick={() => { setSelectedPokemon(pokemon); }}>
-                            <img src={`https://raw.githubusercontent.com/KaranRansing2002/pokemon-battle-simulator/old_version/src/images/${pokemon.name}.png`} />
-                          </div>
-                        </Tooltip>
-                      ))
-                    }
-                  </div>
+    <div className="h-full w-full grid place-items-center sm:px-4  ">
+      <div className="h-full w-full max-w-[95rem] grid grid-cols-1 sm:grid-cols-4 gap-4 p-4">
 
-                  <div className=''>
-                    <div className='grid grid-cols-5 w-full gap-2'>
-                      <div className='w-full grid place-items-center col-span-2 p-2 bg-[#343434]'><img src={`https://play.pokemonshowdown.com/sprites/ani/${selectedPokemon.name.split('-')[0]}.gif`} className='' /></div>
-                      <div className='flex flex-col gap-2 p-2 col-span-3 bg-[#343434]'>
-                        <h2 className='text-xl font-bold text-green-400'>{selectedPokemon.name}</h2>
-                        <div className='flex gap-2'>
-                          {
-                            selectedPokemon.types.map((type, ind) => (
-                              <div key={ind} className={`h-6  text-xs my-4 flex items-center justify-center p-2  border-black border-2 text-black uppercase rounded-md `} style={{ backgroundColor: types[type] }}>{type}</div>
-                            ))
-                          }
-                        </div>
-                        <div className='flex flex-col gap-2'>
-                          <h2>choose ability</h2>
-                          <div className='flex flex-wrap gap-2'>
-                            {
-                              selectedPokemon.abilities.map((ability, ind) => (
-                                <Button key={ind} size='small' variant={selectedPokemon.ability === ability ? 'contained' : 'outlined'} onClick={() => handleAbility(ability)} sx={{ color: 'white' }}>{ability}</Button>
-                              ))
-                            }
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className=''>
-                    <Statbox pokemon={selectedPokemon} />
-                  </div>
-
-                  <div className='grid gap-1 place-items-center bg-[#343434] p-2 flex-grow '>
-                    <h3 className='text-xs uppercase font-semibold text-slate-400 text-center'>Select Atleast 1 Move</h3>
-                    <div className='grid grid-cols-2 gap-2 w-full px-2 md:px-4 '>
-                      {
-                        selectedMoves.map((move, index) => (
-                          <Button variant='contained' size='small' sx={{
-                            backgroundColor: '#4ADE80', color: 'black', '&:hover': {
-                              backgroundColor: '#4ADE80',
-                            },
-                          }} key={index}>{move.Name}</Button>
-                        ))
-                      }
-                    </div>
-                    <div className='flex justify-center gap-2'>
-                      <Button variant='contained' size='small' onClick={() => setToggle(p => !p)}>{toggle ? 'back to Pokemons' : 'Add Moves'}</Button>
-                      <div onClick={handleSave}>{<SnackBar title={title} severity={severity} />}</div>
-                    </div>
-                  </div>
-                </> :
-                <div className='grid place-items-center h-full'>
-                  <h1 className='text-center text-blue-400 font-bold font-mono'>Please select six pokemons of your size to build your team</h1>
-                </div>
-              }
-            </div>
+        {/* LEFT SIDE – POKEMON LIST OR MOVES TABLE */}
+        <div className="sm:col-span-3 bg-[#1E1F22] rounded-lg shadow-lg border border-[#2a2a2a]">
+          <div className="h-full overflow-hidden rounded-lg">
+            {toggle ? (
+              <MovesTable pokemon={selectedPokemon} selectedMoves={selectedMoves} setSelectedMoves={setSelectedMoves} />
+            ) : (
+              <Pokedex setSelectedPokemons={setSelectedPokemons} selectedPokemons={selectedPokemons} />
+            )}
           </div>
         </div>
+
+        {/* RIGHT SIDE – SELECTED POKEMON PANEL */}
+        <div className="bg-[#1E1F22] rounded-xl shadow-xl border border-[#2a2a2a] flex flex-col m-auto py-8 p-4 sm:col-span-1 min-w-[450px] max-h-[100vh] overflow-hidden">
+
+          {selectedPokemon ? (
+            <>
+              {/* TEAM PANEL */}
+              <div className="grid grid-cols-6 gap-2 pb-2">
+                {selectedPokemons.map((pokemon, ind) => (
+                  <Tooltip title={pokemon.name} key={ind}>
+                    <div
+                      className={`rounded-lg bg-[#2e2e2e] p-1 cursor-pointer transition-all duration-200 border hover:scale-[1.05]
+                ${pokemon.name === selectedPokemon.name ? "border-green-400 shadow-md" : "border-transparent"}`}
+                      onClick={() => setSelectedPokemon(pokemon)}
+                    >
+                      <img
+                        src={`https://raw.githubusercontent.com/KaranRansing2002/pokemon-battle-simulator/old_version/src/images/${pokemon.name}.png`}
+                        className="rounded"
+                      />
+                    </div>
+                  </Tooltip>
+                ))}
+              </div>
+
+              {/* SELECTED POKEMON CARD */}
+              <div className="w-full bg-[#252525] rounded-xl px-3 py-4 flex gap-3 shadow-lg border border-[#333]">
+                {/* Sprite */}
+                <div className="w-2/5 flex justify-center items-center bg-[#2f2f2f] rounded-lg p-3 shadow-inner">
+                  <img
+                    src={`https://play.pokemonshowdown.com/sprites/ani/${selectedPokemon.name.split('-')[0]}.gif`}
+                    className="scale-110 drop-shadow-lg"
+                  />
+                </div>
+
+                {/* Details */}
+                <div className="flex flex-col gap-3 w-3/5">
+                  <h2 className="text-xl font-extrabold text-green-400 capitalize tracking-wide">
+                    {selectedPokemon.name}
+                  </h2>
+
+                  {/* Types */}
+                  <div className="flex flex-wrap gap-2">
+                    {selectedPokemon.types.map((type, ind) => (
+                      <span
+                        key={ind}
+                        className="px-2 py-1 text-xs rounded-md border border-black shadow-sm font-semibold"
+                        style={{ backgroundColor: types[type] }}
+                      >
+                        {type}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Abilities */}
+                  <div className="flex flex-col">
+                    <h3 className="text-sm text-slate-300 mb-1">Choose Ability</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {selectedPokemon.abilities.map((ability, ind) => (
+                        <Button
+                          key={ind}
+                          size="small"
+                          variant={selectedPokemon.ability === ability ? "contained" : "outlined"}
+                          onClick={() => handleAbility(ability)}
+                          sx={{
+                            color: "white",
+                            borderRadius: "10px",
+                            textTransform: "capitalize",
+                            padding: "4px 10px",
+                          }}
+                        >
+                          {ability}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* MAIN SCROLL AREA — removes empty space issue */}
+              <div className="flex-grow overflow-y-auto my-3 scrollbar-thin scrollbar-thumb-[#444] scrollbar-track-[#222] pr-1">
+
+                {/* STATBOX SECTION */}
+                <div className="bg-[#252525] rounded-xl p-4 shadow-inner border border-[#333] mb-4">
+                  <Statbox pokemon={selectedPokemon} />
+                </div>
+
+                {/* MOVES SECTION */}
+                <div className="bg-[#252525] rounded-xl p-4 shadow-xl border border-[#333] flex flex-col gap-4">
+                  <h3 className="text-sm uppercase font-semibold text-slate-300 text-center tracking-wide">
+                    Select At Least 1 Move
+                  </h3>
+
+                  {/* move buttons */}
+                  <div className="grid grid-cols-2 gap-3">
+                    {selectedMoves.map((move, index) => (
+                      <Button
+                        variant="contained"
+                        size="small"
+                        sx={{
+                          backgroundColor: "#4ADE80",
+                          color: "black",
+                          borderRadius: "8px",
+                          fontWeight: "bold",
+                          "&:hover": { backgroundColor: "#3ec66f" },
+                        }}
+                        key={index}
+                      >
+                        {move.Name}
+                      </Button>
+                    ))}
+                  </div>
+
+                  {/* action buttons */}
+                  <div className="flex justify-center gap-4 mt-3">
+                    <Button variant="contained" size="small" onClick={() => setToggle((p) => !p)}>
+                      {toggle ? "Back to Pokémons" : "Add Moves"}
+                    </Button>
+
+                    <SnackBar title={title} severity={severity} triggerOnClick={handleSave} />
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <div className="grid place-items-center h-full text-center px-4">
+              <h1 className="text-lg text-blue-300 font-bold">
+                Please select six Pokémon to begin building your team
+              </h1>
+            </div>
+          )}
+        </div>
+
       </div>
     </div>
+  );
 
-  )
 }
 
 export default TeamBuilder

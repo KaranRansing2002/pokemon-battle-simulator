@@ -115,62 +115,124 @@ export default function Pokedex({ setSelectedPokemons, selectedPokemons }) {
   }
 
   return (
-    <div className='text-white bg-slate-100 h-full'>
-      <DataGrid
-        sx={{
-          '& .MuiDataGrid-virtualScroller::-webkit-scrollbar': {
-            height: '0.4em', // Change 'width' to 'height'
-          },
-          '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-track': {
-            background: '#f1f1f1',
-          },
-          '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb': {
-            backgroundColor: '#888',
-          },
-          '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb:hover': {
-            background: '#555',
-          },
-          '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-horizontal': { // Add horizontal scrollbar styles
-            height: '0.4em',
-          },
-          '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb-horizontal': {
-            backgroundColor: '#888',
-          },
-          '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb-horizontal:hover': {
-            background: '#555',
-          },
-        }}
+    <div className="w-full overflow-auto h-full bg-[#111] p-4 rounded-lg">
+      <div
+        className="w-full h-full rounded-lg shadow-lg"
         style={{
-          height: '100%', 
-          overflow: 'hidden', 
+          backgroundColor: "#1A1A1D",
+          padding: "16px",
+          border: "1px solid #2c2c2c",
         }}
+      >
+        <DataGrid
+          sx={{
+            color: "#e0e0e0",
+            border: "none",
 
-        checkboxSelection
-        onRowSelectionModelChange={(ids) => {
-          const selectedRows = data.filter((row) => ids.includes(row.id));
-          selectedRows.forEach((x) => {
-            for (let y of selectedPokemons) {
-              if (x.id == y.id && y.moves) {
-                x.moves = y.moves
-                // console.log(y);
+            // Table background
+            "& .MuiDataGrid-main": {
+              backgroundColor: "#1A1A1D",
+            },
+
+            // Header  
+            "& .MuiDataGrid-columnHeaders": {
+              backgroundColor: "#232326",
+              color: "#EDEDED",
+              fontSize: "0.9rem",
+              fontWeight: "bold",
+              borderBottom: "1px solid #333",
+            },
+
+            // Column separators
+            "& .MuiDataGrid-columnSeparator": {
+              display: "none"
+            },
+
+            // Rows
+            "& .MuiDataGrid-row": {
+              backgroundColor: "#1E1E21",
+              borderBottom: "1px solid #2d2d2f",
+            },
+            "& .MuiDataGrid-row:hover": {
+              backgroundColor: "#27272b",
+            },
+
+            // Cells  
+            "& .MuiDataGrid-cell": {
+              padding: "8px 12px",
+              fontSize: "0.85rem",
+              borderColor: "#2a2a2d",
+            },
+
+            // Checkboxes  
+            "& .MuiCheckbox-root": {
+              color: "#4ADE80 !important",
+            },
+
+            // Toolbar quick filter box  
+            "& .MuiInputBase-input": {
+              color: "white",
+            },
+            "& .MuiOutlinedInput-root": {
+              "& fieldset": { borderColor: "#444" },
+              "&:hover fieldset": { borderColor: "#888" },
+              "&.Mui-focused fieldset": { borderColor: "#4ADE80" },
+            },
+
+            // Scrollbar  
+            "& .MuiDataGrid-virtualScroller": {
+              scrollbarWidth: "thin",
+            },
+            "& ::-webkit-scrollbar": {
+              width: "6px",
+              height: "6px",
+            },
+            "& ::-webkit-scrollbar-thumb": {
+              background: "#444",
+              borderRadius: "4px",
+            },
+            "& ::-webkit-scrollbar-thumb:hover": {
+              background: "#666",
+            },
+
+            // Pagination  
+            "& .MuiTablePagination-root": {
+              color: "white"
+            },
+          }}
+          style={{
+            height: "100%",
+            width: "100%",
+            borderRadius: "12px",
+          }}
+          checkboxSelection
+          onRowSelectionModelChange={(ids) => {
+            const selectedRows = data.filter((row) => ids.includes(row.id));
+            selectedRows.forEach((x) => {
+              for (let y of selectedPokemons) {
+                if (x.id == y.id && y.moves) {
+                  x.moves = y.moves;
+                }
               }
-            }
-          })
-          // console.log(selectedRows)
-          if (selectedRows.length <= 6) setSelectedPokemons(selectedRows)
-        }}
-        rowSelectionModel={rowids}
-        isRowSelectable={(params) => (selectedPokemons.length < 6 || selectedPokemons.some((x) => x.id === params.id))}
-        rows={data}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: { page: 0, pageSize: 10 },
-          },
-        }}
-        pageSizeOptions={[10,15]}
-        slots={{ toolbar: QuickSearchToolbar }}
-      />
+            });
+
+            if (selectedRows.length <= 6) setSelectedPokemons(selectedRows);
+          }}
+          rowSelectionModel={rowids}
+          isRowSelectable={(params) =>
+            selectedPokemons.length < 6 ||
+            selectedPokemons.some((x) => x.id === params.id)
+          }
+          rows={data}
+          columns={columns}
+          initialState={{
+            pagination: { paginationModel: { page: 0, pageSize: 11 } },
+          }}
+          pageSizeOptions={[11, 12]}
+          slots={{ toolbar: QuickSearchToolbar }}
+        />
+      </div>
     </div>
   );
+
 }
